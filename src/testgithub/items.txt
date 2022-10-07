@@ -1,0 +1,17 @@
+1
+food,basic,2
+2
+bed,double,4
+toy,ball,5
+toy,yarn,5
+3
+food,deluxe,3
+4
+bed,queen,6
+toy,chew toy,7
+toy,mice toy,7
+5
+food,premium,5
+bed,king,8
+toy,frisbee,5
+toy,laser pointer,5

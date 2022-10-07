@@ -1,0 +1,17 @@
+name:Teddy
+animal:Dog
+level:2
+xp:3
+health:31
+happiness:12
+sleep:12
+hunger:14
+xpCap:100
+healthCap:35
+happinessCap:15
+sleepCap:20
+hungerCap:20
+food:basic,basic,basic
+bed:double,double
+toy:ball,yarn
+money: 1.0

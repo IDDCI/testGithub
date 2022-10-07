@@ -1,0 +1,17 @@
+name:Bob
+animal:Dog
+level:1
+xp:0
+health:29
+happiness:8
+sleep:18
+hunger:18
+xpCap:20
+healthCap:30
+happinessCap:10
+sleepCap:20
+hungerCap:20
+food:
+bed:
+toy:
+money: 0.0
