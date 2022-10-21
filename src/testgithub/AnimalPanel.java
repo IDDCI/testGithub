@@ -29,6 +29,8 @@ public class AnimalPanel extends JPanel{
     
     
     Animal animal;
+    Dog dog;
+    Cat cat;
     StorePanel storePanel;
     
     public AnimalPanel(StorePanel storePanel){
@@ -84,6 +86,14 @@ public class AnimalPanel extends JPanel{
                             remove(animalName);
                             remove(submit);
                             
+                            if ("Dog".equals(Type)){
+                                dog = new Dog(Name); 
+                            }
+                            
+                            else if ("Cat".equals(Type)){
+                                cat = new Cat(Name);
+                            }
+                            
                             add(play);
                             add(feed); 
                             add(sleep); 
@@ -92,7 +102,7 @@ public class AnimalPanel extends JPanel{
                             add(instructions);
                         }
                         else {
-                           JOptionPane.showMessageDialog(null, "Name field is empty please enter a name for the tamagochi ");
+                           JOptionPane.showMessageDialog(null, "Name field is empty please enter\na name for the animal");
                         }
                     }
                 }
