@@ -20,7 +20,7 @@ public class VirtualPetGUI extends JFrame{
         
         
         //create new instance of animalPanel and add to frame
-        this.animalPanel = new AnimalPanel();
+        this.animalPanel = new AnimalPanel(this.storePanel);
         
         this.add(this.animalPanel); //add animal panel to the frame first
         this.animalPanel.setLayout(null);
@@ -38,7 +38,7 @@ public class VirtualPetGUI extends JFrame{
     public void setAnimal(Animal animal) {
         this.animal = animal;
         this.animalPanel.animal = this.animal;
-        this.storePanel = new StorePanel(animal);
+        this.storePanel = new StorePanel(animal, this.animalPanel);
         this.add(this.storePanel);
     }
 }

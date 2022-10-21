@@ -31,13 +31,13 @@ public class StorePanel extends JPanel implements ActionListener {
     
     Animal animal;
     
-    JPanel animalPanel;
+    AnimalPanel animalPanel;
     
     //constructor
-    public StorePanel(Animal animal) {
+    public StorePanel(Animal animal, AnimalPanel animalPanel) {
         //setting values
         this.animal = animal;
-        this.animalPanel = animalPanel;
+        this.animalPanel = animalPanel; //provide link to animal panel
         
         //setting values to itemListArray from store class
         ArrayList getItemArray = animal.store.getStoreItems();
@@ -70,6 +70,8 @@ public class StorePanel extends JPanel implements ActionListener {
         this.backButton.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
+                        //bring animalPanel back to front
+                       animalPanel.setVisible(true);
                        
                     }
                 }

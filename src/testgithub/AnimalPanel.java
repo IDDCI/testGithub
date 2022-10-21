@@ -21,7 +21,11 @@ public class AnimalPanel extends JPanel{
     JLabel title, typeQ, nameQ;
     JTextField animalTpye, animalName;
     
-    public AnimalPanel(){
+    StorePanel storePanel;
+    
+    public AnimalPanel(StorePanel storePanel){
+        this.storePanel = storePanel; //provide link to store panel
+        
         setLayout(null);
         super.setBackground(Color.pink); //set background to pink
         
@@ -72,8 +76,9 @@ public class AnimalPanel extends JPanel{
         this.store.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
-                        
+                        //set animal panel to false, displaying store panel
                         setVisible(false);
+                        
                     }
                 }
         );
