@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,12 +16,19 @@ import javax.swing.JTextField;
  * @author DDC
  */
 public class AnimalPanel extends JPanel{
-    Animal animal;
+
+    
+    JLabel title, typeQ, nameQ;
+    JTextField animalName;
+    JComboBox animalType;
+    JButton submit;
+    String Type, Name;
+    
     JButton play, feed, sleep, store, exit, instructions;
     JLabel happiness, health, hunger, sleeping;
-    JLabel title, typeQ, nameQ;
-    JTextField animalTpye, animalName;
     
+    
+    Animal animal;
     StorePanel storePanel;
     
     public AnimalPanel(StorePanel storePanel){
@@ -29,11 +37,71 @@ public class AnimalPanel extends JPanel{
         setLayout(null);
         super.setBackground(Color.pink); //set background to pink
         
+        
+        // Ask for type of animal
+        // title
+        this.typeQ = new JLabel("Animal Type:");
+        this.typeQ.setLocation(350, 200);
+        this.typeQ.setSize(100, 25);
+        add(typeQ);
+        
+        // Drop box
+        this.animalType = new JComboBox();
+        this.animalType.addItem("Dog");
+        this.animalType.addItem("Cat");
+        this.animalType.setSize(100, 25);
+        this.animalType.setLocation(350, 225);
+        add(animalType);
+        
+        
+        // Ask for animal name
+        //title
+        this.nameQ = new JLabel("Animal Name:");
+        this.nameQ.setLocation(350, 300);
+        this.nameQ.setSize(100, 25);
+        add(nameQ);
+        
+        // text field
+        this.animalName = new JTextField();
+        this.animalName.setLocation(350, 325);
+        this.animalName.setSize(200, 25);
+        add(animalName);
+        
+        // Button to submit animal type and name
+        this.submit = new JButton("Submit");
+        this.submit.setLocation(350, 400);
+        this.submit.setSize(100, 25);
+        add(submit);
+        this.submit.addActionListener(
+                new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        Type = (String) animalType.getSelectedItem();
+                        Name = animalName.getText();
+                        if (!"".equals(Name)){
+                            remove(typeQ);
+                            remove(animalType);
+                            remove(nameQ);
+                            remove(animalName);
+                            remove(submit);
+                            
+                            add(play);
+                            add(feed); 
+                            add(sleep); 
+                            add(store); 
+                            add(exit); 
+                            add(instructions);
+                        }
+                        else {
+                           JOptionPane.showMessageDialog(null, "Name field is empty please enter a name for the tamagochi ");
+                        }
+                    }
+                }
+        );
+         
         // Buttons for actions
         this.play = new JButton("Play");
         this.play.setLocation(350, 500);
         this.play.setSize(100, 25);
-        add(play); 
         this.play.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
@@ -46,7 +114,6 @@ public class AnimalPanel extends JPanel{
         this.feed = new JButton("Feed");
         this.feed.setLocation(450, 500);
         this.feed.setSize(100, 25);
-        add(feed); 
         this.feed.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
@@ -58,7 +125,7 @@ public class AnimalPanel extends JPanel{
         this.sleep = new JButton("Sleep");
         this.sleep.setLocation(550, 500);
         this.sleep.setSize(100, 25);
-        add(sleep); 
+        
         this.sleep.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
@@ -71,7 +138,7 @@ public class AnimalPanel extends JPanel{
         this.store = new JButton("Store");
         this.store.setLocation(350, 535);
         this.store.setSize(100, 25);
-        add(store); 
+        
         JPanel test = this;
         this.store.addActionListener(
                 new ActionListener(){
@@ -87,7 +154,7 @@ public class AnimalPanel extends JPanel{
         this.exit = new JButton("Exit");
         this.exit.setLocation(450, 535);
         this.exit.setSize(100, 25);
-        add(exit); 
+        
         this.exit.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
@@ -100,7 +167,7 @@ public class AnimalPanel extends JPanel{
         this.instructions = new JButton("Instructions");
         this.instructions.setLocation(550, 535);
         this.instructions.setSize(100, 25);
-        add(instructions); 
+         
         this.instructions.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
@@ -109,29 +176,7 @@ public class AnimalPanel extends JPanel{
                 }
         );
         
-        // Showing animal stats
-        //this.happiness = new JLabel ("Happiness:"+ animal.getHappiness());
-        //this.happiness.setLocation(300, 400);
-        //this.happiness.setSize(100, 25);
-        //add(happiness);
-        //this.happiness.setEnabled(false);
         
-        //this.health = new JLabel ("Health:"+ animal.getHealth());
-        //this.health.setLocation(300, 430);
-        //this.health.setSize(100, 25);
-        //add(health);
-        //this.health.setEnabled(false);
-        
-        
-        // Ask for type of animal
-        // title
-        
-        // text field
-        
-        // Ask for animal name
-        //title
-        
-        // text field
         
         
     }
