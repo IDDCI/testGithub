@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package testgithub;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -16,16 +14,16 @@ import javax.swing.JTextField;
  *
  * @author DDC
  */
-public class Panel extends JPanel{
+public class AnimalPanel extends JPanel{
     Animal animal;
     JButton play, feed, sleep, store, exit, instructions;
     JLabel happiness, health, hunger, sleeping;
     JLabel title, typeQ, nameQ;
     JTextField animalTpye, animalName;
     
-    public Panel(){
+    public AnimalPanel(){
         setLayout(null);
-        
+        super.setBackground(Color.pink); //set background to pink
         
         // Buttons for actions
         this.play = new JButton("Play");
@@ -70,10 +68,12 @@ public class Panel extends JPanel{
         this.store.setLocation(350, 535);
         this.store.setSize(100, 25);
         add(store); 
+        JPanel test = this;
         this.store.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
                         
+                        setVisible(false);
                     }
                 }
         );

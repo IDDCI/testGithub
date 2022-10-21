@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -18,12 +19,11 @@ import java.util.Scanner;
  */
 public class Store {
     //instance variables
-    HashMap food;
-    HashMap bed;
-    HashMap toy;
-    private int level;
+    HashMap food, bed, toy;
+    ArrayList allItems;
+    private int level, purchaseInput;
     
-    private int purchaseInput;
+
     private Scanner scanner;
     Inventory inventory;
     Money money;
@@ -37,8 +37,9 @@ public class Store {
         this.food = new HashMap();
         this.bed = new HashMap();
         this.toy = new HashMap();
-
-
+        
+        this.allItems = new ArrayList();
+        
         this.addFileItems();
 
     }
@@ -52,7 +53,7 @@ public class Store {
     public void addFileItems() {
         try {
             //read from file
-            FileReader fr = new FileReader("./src/virtualpet/items.txt");
+            FileReader fr = new FileReader("./src/testgithub/items.txt");
             BufferedReader inputStream = new BufferedReader(fr);
 
             String line;
@@ -65,16 +66,20 @@ public class Store {
                     //split line into type and price
                     String[] lineSplit = line.split(",", 3);
                     if (lineSplit[0] != null) {
+                        
                         //add value as item and money as value
                         switch (lineSplit[0]) {
                             case "toy":
                                 this.toy.put(lineSplit[1], lineSplit[2]);
+                                this.allItems.add(lineSplit[1]);
                                 break;
                             case "bed":
                                 this.bed.put(lineSplit[1], lineSplit[2]);
+                                this.allItems.add(lineSplit[1]);
                                 break;
                             case "food":
                                 this.food.put(lineSplit[1], lineSplit[2]);
+                                this.allItems.add(lineSplit[1]);
                                 break;
                             default:
                                 break;
@@ -307,4 +312,7 @@ public class Store {
             System.out.println("There are currently no items in this category!\nLevel up your pet to get more items");
     }
     
+    public ArrayList getStoreItems() {
+        return this.allItems;
+    }
 }
