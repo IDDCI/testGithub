@@ -28,17 +28,8 @@ public class VirtualPetGUI extends JFrame{
         this.getContentPane().setBackground(Color.PINK);
         this.setVisible(true);
         
-        //testing
-        this.setAnimal(new Cat("Bob"));
         this.animalPanel.setVisible(true);
         
-    }
-    
-    //set animal to all panels 
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
-        this.animalPanel.animal = this.animal;
-        this.storePanel = new StorePanel(animal, this.animalPanel);
-        this.add(this.storePanel);
+        
     }
 }

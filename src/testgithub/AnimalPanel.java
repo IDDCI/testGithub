@@ -93,12 +93,11 @@ public class AnimalPanel extends JPanel {
 
                     // Creates new object depending on the animal type user chose
                     if ("Dog".equals(Type)) {
-                        dog = new Dog(Name);
-
+                        animal = new Dog(Name);
                     } else if ("Cat".equals(Type)) {
-                        cat = new Cat(Name);
+                        animal = new Cat(Name);
                     }
-
+                    addStorePanel();
                     // Adds new components
                     add(play);
                     add(feed);
@@ -123,11 +122,7 @@ public class AnimalPanel extends JPanel {
         this.play.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if ("Dog".equals(Type)){
-                    dog.play();
-                } else if ("Cat".equals(Type)){
-                    cat.play();
-                }
+                animal.play();
                 
             }
         }
@@ -140,11 +135,7 @@ public class AnimalPanel extends JPanel {
         this.feed.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if ("Dog".equals(Type)){
-                    dog.feed();
-                } else if ("Cat".equals(Type)){
-                    cat.feed();
-                }
+                animal.feed();
             }
         }
         );
@@ -156,11 +147,7 @@ public class AnimalPanel extends JPanel {
         this.sleep.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if ("Dog".equals(Type)){
-                    dog.sleeping();
-                } else if ("Cat".equals(Type)){
-                    cat.sleeping();
-                }
+                animal.sleeping();
             }
         }
         );
@@ -169,13 +156,13 @@ public class AnimalPanel extends JPanel {
         this.store = new JButton("Store");
         this.store.setLocation(350, 535);
         this.store.setSize(100, 25);
-
-        JPanel test = this;
         this.store.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //set animal panel to false, displaying store panel
+                updateStore();
                 setVisible(false);
+                
             }
         }
         );
@@ -236,21 +223,23 @@ public class AnimalPanel extends JPanel {
     public void paint(Graphics g){
         super.paint(g);
         if (Type != null && !"".equals(Name)) {
-            if ("Dog".equals(this.Type)) {
-                g.drawString("Happiness: "+dog.getHappiness(), 310, 425);
-                g.drawString("Health: "+dog.getHealth(), 310, 440);
-                g.drawString("Hunger: "+dog.getHunger(), 310, 455);
-                g.drawString("Sleep: "+dog.getSleep(), 310, 470);
-            } 
-            if ("Cat".equals(this.Type)) {
-                g.drawString("Happiness: "+cat.getHappiness(), 310, 425);
-                g.drawString("Health: "+cat.getHealth(), 310, 440);
-                g.drawString("Hunger: "+cat.getHunger(), 310, 455);
-                g.drawString("Sleep: "+cat.getSleep(), 310, 470);
-            }
-            
+            g.drawString("Happiness: "+animal.getHappiness(), 310, 425);
+            g.drawString("Health: "+animal.getHealth(), 310, 440);
+            g.drawString("Hunger: "+animal.getHunger(), 310, 455);
+            g.drawString("Sleep: "+animal.getSleep(), 310, 470);
         }
         repaint();
     }
 
+    
+    //accessing the store methods
+    private void addStorePanel() {
+        this.storePanel = new StorePanel(this.animal, this);
+        this.storePanel.setVisible(true);
+        super.add(this.storePanel); //add to jframe
+        
+    }
+    private void updateStore() {
+        this.storePanel.update();
+    }
 }

@@ -321,6 +321,7 @@ public class Store {
             items[i] = (String)this.allItems.get(i);
             i++;
         }
+        
         return items;
     }
     

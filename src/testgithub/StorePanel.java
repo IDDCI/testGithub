@@ -8,10 +8,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -62,11 +60,10 @@ public class StorePanel extends JPanel implements ActionListener {
             //get money amount from money class
         this.displayCoins.setText("Coins: $"+this.animal.store.money.getAmount()); 
         this.displayCoins.setLocation(100, 60);
-        this.displayCoins.setSize(150,100);
+        this.displayCoins.setSize(220,100);
         this.displayCoins.setFont(new Font("Serif", Font.PLAIN, 30));
         this.displayCoins.setVisible(true);
         this.add(displayCoins);
-        repaint();
         
         //adding items to item pane
         this.foodList = new JList(this.animal.store.getFoods());
@@ -108,11 +105,13 @@ public class StorePanel extends JPanel implements ActionListener {
                     }
                 }
         );
-        
-        repaint();
     }
     
-    
+    public void update() {
+        System.out.println(this.animal.store.money.getAmount());
+        this.displayCoins.setText("Coins: $"+this.animal.store.money.getAmount()); 
+        
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
