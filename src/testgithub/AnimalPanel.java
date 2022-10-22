@@ -128,6 +128,7 @@ public class AnimalPanel extends JPanel {
                 } else if ("Cat".equals(Type)){
                     cat.play();
                 }
+                
             }
         }
         );

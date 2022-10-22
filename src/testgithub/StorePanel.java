@@ -5,6 +5,7 @@
 package testgithub;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ import javax.swing.ScrollPaneConstants;
 public class StorePanel extends JPanel implements ActionListener {
     //instance variables
     JButton buyButton, backButton, searchButton;
-    JLabel displayCoins, filterLabel;
+    JLabel storeTitle, displayCoins, filterLabel;
     JComboBox filterBox;
     JScrollPane itemPane;
     String[] itemListArray;
-    JList itemList;
+    JList foodList, bedList, toyList, allItemsList;
     
     Animal animal;
     
@@ -39,32 +40,50 @@ public class StorePanel extends JPanel implements ActionListener {
         this.animal = animal;
         this.animalPanel = animalPanel; //provide link to animal panel
         
-        //setting values to itemListArray from store class
-        ArrayList getItemArray = animal.store.getStoreItems();
-        System.out.println(getItemArray.size());
-        this.itemListArray = new String[getItemArray.size()];
-
-        for(int i=0;i<getItemArray.size();i++)
-        {
-            this.itemListArray[i] = (String)getItemArray.get(i);
-        }
-        
         //to be able to move components around
         this.setLayout(null);
         super.setBackground(Color.pink);
         super.setVisible(true);
-        this.itemList = new JList(itemListArray);
         
-        
-        //adding items to item pane
-        this.itemPane = new JScrollPane(this.itemList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         
        
         //adding components to frame
-        // Exit button
-        this.backButton = new JButton("Exit");
-        this.backButton.setLocation(450, 535);
+        //add Store title
+        this.storeTitle = new JLabel();
+        this.storeTitle.setText("Store");
+        this.storeTitle.setLocation(430, 0);
+        this.storeTitle.setSize(170,100);
+        this.storeTitle.setFont(new Font("Serif", Font.PLAIN, 50));
+        this.storeTitle.setVisible(true);
+        this.add(storeTitle);
+                
+        //display coins
+        this.displayCoins = new JLabel();
+            //get money amount from money class
+        this.displayCoins.setText("Coins: $"+this.animal.store.money.getAmount()); 
+        this.displayCoins.setLocation(100, 60);
+        this.displayCoins.setSize(150,100);
+        this.displayCoins.setFont(new Font("Serif", Font.PLAIN, 30));
+        this.displayCoins.setVisible(true);
+        this.add(displayCoins);
+        repaint();
+        
+        //adding items to item pane
+        this.foodList = new JList(this.animal.store.getFoods());
+        this.bedList = new JList(this.animal.store.getBeds());
+        this.toyList = new JList(this.animal.store.getToys());
+        this.allItemsList = new JList(this.animal.store.getAllItems());
+        
+        this.itemPane = new JScrollPane(this.allItemsList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.itemPane.setLocation(480, 100);
+        this.itemPane.setSize(420,420);
+        this.itemPane.setVisible(true);
+        this.add(itemPane);
+        
+        //Exit button
+        this.backButton = new JButton("Back");
+        this.backButton.setLocation(808, 560);
         this.backButton.setSize(100, 25);
         this.add(backButton); 
         this.backButton.addActionListener(
@@ -77,8 +96,20 @@ public class StorePanel extends JPanel implements ActionListener {
                 }
         );
         
+        //Buy button
+        this.buyButton = new JButton("Buy");
+        this.buyButton.setLocation(700, 560);
+        this.buyButton.setSize(100, 25);
+        this.add(buyButton); 
+        this.buyButton.addActionListener(
+                new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                       
+                    }
+                }
+        );
         
-        
+        repaint();
     }
     
     

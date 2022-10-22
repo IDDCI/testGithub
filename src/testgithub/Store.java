@@ -312,7 +312,58 @@ public class Store {
             System.out.println("There are currently no items in this category!\nLevel up your pet to get more items");
     }
     
-    public ArrayList getStoreItems() {
-        return this.allItems;
+    //get all items
+    public String[] getAllItems() {
+        //return as string
+        String[] items = new String[this.allItems.size()];
+        int i=0;
+        for (int j=0; j<this.allItems.size(); j++) {
+            items[i] = (String)this.allItems.get(i);
+            i++;
+        }
+        return items;
+    }
+    
+    //get individual items
+    public String[] getFoods() {
+        //return as string array
+        String[] foods = new String[this.food.size()];
+        int i=0;
+        //traverse and add foods to string array
+        for (Object fooditem: this.food.keySet())
+        {
+            foods[i] = fooditem.toString();
+            i++;
+        }
+        
+        return foods;
+    }
+    
+    public String[] getToys() {
+        //return as string array
+        String[] toys = new String[this.toy.size()];
+        int i=0;
+        //traverse and add toy to string array
+        for (Object toyItem: this.toy.keySet())
+        {
+            toys[i] = toyItem.toString();
+            i++;
+        }
+        
+        return toys;
+    }
+    
+    public String[] getBeds() {
+        //return as string array
+        String[] beds = new String[this.bed.size()];
+        int i=0;
+        //traverse and add toy to string array
+        for (Object bedItem: this.bed.keySet())
+        {
+            beds[i] = bedItem.toString();
+            i++;
+        }
+        
+        return beds;
     }
 }
