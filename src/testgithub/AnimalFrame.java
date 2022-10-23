@@ -1,25 +1,27 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package testgithub;
 
-import java.awt.Color;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
-public class VirtualPetGUI extends JFrame{
-    //instance variables
+/**
+ *
+ * @author jennylim
+ */
+public class AnimalFrame extends JFrame {
     AnimalPanel animalPanel;
-    StorePanel storePanel;
-    Animal animal;
     
-    public VirtualPetGUI() {
-        //set up frame
+    public AnimalFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000, 700);
         this.setResizable(false);
         
         //create new instance of animalPanel and add to frame
-        this.animalPanel = new AnimalPanel(this.storePanel);
-        //this.storePanel = new StorePanel(animal, animalPanel);
+        this.animalPanel = new AnimalPanel();
         
         
         this.add(this.animalPanel); //add animal panel to the frame first
@@ -27,10 +29,7 @@ public class VirtualPetGUI extends JFrame{
         this.setVisible(true);
         
         this.animalPanel.setVisible(true);
-        
-        //this.storePanel.setVisible(false);
-        //this.add(this.storePanel); //add to jframe
-        
-        
     }
+    
+    
 }

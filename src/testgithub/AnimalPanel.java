@@ -32,10 +32,8 @@ public class AnimalPanel extends JPanel {
     StorePanel storePanel;
     AnimalPanel ap;
 
-    public AnimalPanel(StorePanel storePanel) {
-        this.storePanel = storePanel; //provide link to store panel
+    public AnimalPanel() {
         
-
         setLayout(null);
         super.setBackground(Color.pink); //set background to pink
 
@@ -104,8 +102,6 @@ public class AnimalPanel extends JPanel {
                     add(store);
                     add(instructions);
                     
-                    //Create store instance
-                    addStorePanel();
 
                 } else {
                     // If name is empty nothing will be removed or added, just a pop up message to inform the user
@@ -158,15 +154,11 @@ public class AnimalPanel extends JPanel {
         this.store = new JButton("Store");
         this.store.setLocation(350, 535);
         this.store.setSize(100, 25);
+        
         this.store.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //set animal panel to false, displaying store panel
-                updateStore();
-                // show store panel
-                showStore();
-                // remove animal panel
-                //setVisible(false);
+                
             }
         }
         );
@@ -183,12 +175,11 @@ public class AnimalPanel extends JPanel {
             }
         }
         );
-
+        
         // Instruction Button
         this.instructions = new JButton("Instructions");
         this.instructions.setLocation(550, 535);
         this.instructions.setSize(100, 25);
-
         this.instructions.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -235,17 +226,13 @@ public class AnimalPanel extends JPanel {
         repaint();
     }
 
-    //accessing the store methods
-    private void addStorePanel() {
-        this.storePanel = new StorePanel(this.animal, this);
-        this.storePanel.setVisible(false);
-        this.storePanel.setSize(1000, 700);
-        this.add(this.storePanel); //add to jframe 
-    }
+    
     private void updateStore(){
         this.storePanel.update();
     }
-    private void showStore(){
-        this.storePanel.setVisible(true);
+    
+    
+    public JButton getStoreButton() {
+        return this.store;
     }
 }

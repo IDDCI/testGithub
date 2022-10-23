@@ -10,6 +10,6 @@ package testgithub;
  */
 public class Main {
     public static void main(final String[] args) {
-        VirtualPetGUI vpGUI = new VirtualPetGUI(); 
+        VPFrame vpGUI = new VPFrame();
     }
 }
