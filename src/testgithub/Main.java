@@ -4,16 +4,12 @@
  */
 package testgithub;
 
-import java.awt.Color;
-import javax.swing.JFrame;
-
 /**
  *
  * @author DDC
  */
 public class Main {
     public static void main(final String[] args) {
-        VirtualPetGUI vpGUI = new VirtualPetGUI();
-        
+        VirtualPetGUI vpGUI = new VirtualPetGUI(); 
     }
 }

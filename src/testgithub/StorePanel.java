@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -41,7 +42,6 @@ public class StorePanel extends JPanel implements ActionListener {
         //to be able to move components around
         this.setLayout(null);
         super.setBackground(Color.pink);
-        super.setVisible(true);
         
         
        

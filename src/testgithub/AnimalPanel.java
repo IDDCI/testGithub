@@ -29,12 +29,12 @@ public class AnimalPanel extends JPanel {
     JLabel happiness, health, hunger, sleeping;
 
     Animal animal;
-    Dog dog;
-    Cat cat;
     StorePanel storePanel;
+    AnimalPanel ap;
 
     public AnimalPanel(StorePanel storePanel) {
         this.storePanel = storePanel; //provide link to store panel
+        
 
         setLayout(null);
         super.setBackground(Color.pink); //set background to pink
@@ -97,13 +97,15 @@ public class AnimalPanel extends JPanel {
                     } else if ("Cat".equals(Type)) {
                         animal = new Cat(Name);
                     }
-                    addStorePanel();
                     // Adds new components
                     add(play);
                     add(feed);
                     add(sleep);
                     add(store);
                     add(instructions);
+                    
+                    //Create store instance
+                    addStorePanel();
 
                 } else {
                     // If name is empty nothing will be removed or added, just a pop up message to inform the user
@@ -161,8 +163,10 @@ public class AnimalPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //set animal panel to false, displaying store panel
                 updateStore();
-                setVisible(false);
-                
+                // show store panel
+                showStore();
+                // remove animal panel
+                //setVisible(false);
             }
         }
         );
@@ -231,15 +235,17 @@ public class AnimalPanel extends JPanel {
         repaint();
     }
 
-    
     //accessing the store methods
     private void addStorePanel() {
         this.storePanel = new StorePanel(this.animal, this);
-        this.storePanel.setVisible(true);
-        super.add(this.storePanel); //add to jframe
-        
+        this.storePanel.setVisible(false);
+        this.storePanel.setSize(1000, 700);
+        this.add(this.storePanel); //add to jframe 
     }
-    private void updateStore() {
+    private void updateStore(){
         this.storePanel.update();
+    }
+    private void showStore(){
+        this.storePanel.setVisible(true);
     }
 }
