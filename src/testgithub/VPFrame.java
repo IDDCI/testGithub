@@ -29,34 +29,41 @@ public class VPFrame extends JFrame{
         this.setVisible(true);
         this.animalPanel.setVisible(true);
         
+        //store and back buttons connect the storepanel and animalpanel therefore 
+        //there will be a listener to determine when each is called to switch between
+        //the two
         this.animalPanel.getStoreButton().addActionListener( new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
-                    getContentPane().removeAll();
+                    //set animalpanel visibility to false and add the storepanel
+                    animalPanel.setVisible(false);
                     addStorePanel();
-                    //calcPanel.setVisible(true);
                     add(storePanel);
+                    //set storepanel visibility to true
+                    storePanel.setVisible(true);
+                    
+                    //listen to the store's back button 
+                    storePanel.getBackButton().addActionListener( new ActionListener()
+                    {
+                        @Override
+                        public void actionPerformed(ActionEvent e) 
+                        {
+                            //remove the store panel when the back button is pressed
+                            remove(storePanel);
+                            //set visibility of animal panel to true
+                            animalPanel.setVisible(true);
+                        }
+                    });
                     revalidate();
                     repaint();
                 }
             });
         
-        this.storePanel.getBackButton().addActionListener( new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    //calcPanel.setVisible(true);
-                    System.out.println("hi there");
-                    getContentPane().removeAll();
-                    add(animalPanel);
-                    revalidate();
-                    repaint();
-            }
-        });
     }
     
+    //add store panel to frame
     public void addStorePanel() {
         this.storePanel = new StorePanel();
         this.storePanel.setAnimal(animalPanel.animal);

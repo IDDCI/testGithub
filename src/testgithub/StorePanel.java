@@ -44,14 +44,7 @@ public class StorePanel extends JPanel implements ActionListener {
         this.backButton.setLocation(808, 560);
         this.backButton.setSize(100, 25);
         this.add(backButton); 
-        this.backButton.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e){
-                        
-                       
-                    }
-                }
-        );
+        
     }
     
     public void setAnimal(Animal animal) {
@@ -92,8 +85,6 @@ public class StorePanel extends JPanel implements ActionListener {
         this.itemPane.setVisible(true);
         this.add(itemPane);
         
-        
-        
         //Buy button
         this.buyButton = new JButton("Buy");
         this.buyButton.setLocation(700, 560);
@@ -109,14 +100,9 @@ public class StorePanel extends JPanel implements ActionListener {
     }
     
     public JButton getBackButton() {
-        System.out.println("getting back button");
         return this.backButton;
     }
     
-    public JButton getBuyButton() {
-        System.out.println("getting buy button");
-        return this.buyButton;
-    }
     public void update() {
         System.out.println(this.animal.store.money.getAmount());
         this.displayCoins.setText("Coins: $"+this.animal.store.money.getAmount()); 
