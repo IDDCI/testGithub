@@ -36,10 +36,10 @@ public class Dog extends Animal {
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too full to eat.");
             }
         // If statements for when values are over or equal to their cap
-        } if (this.getHunger() >= this.getHungerCap()) {
+        } if (this.getHunger() > this.getHungerCap()) {
             this.setHunger(this.getHungerCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too full to eat.");
-        } if (this.getHappiness() >= this.getHappinessCap()) {
+        } if (this.getHappiness() > this.getHappinessCap()) {
             this.setHappiness(this.getHappinessCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }
@@ -72,7 +72,7 @@ public class Dog extends Animal {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too hungry to play.");
         } if (this.getSleep() == 1) {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too sleepy to play.");
-        } if (this.getHappiness() >= this.getHappinessCap()) {
+        } if (this.getHappiness() > this.getHappinessCap()) {
             this.setHappiness(this.getHappinessCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }
@@ -86,12 +86,13 @@ public class Dog extends Animal {
         if (this.getSleep() < this.getSleepCap() && this.getHealth() < this.getHealthCap()) {
             // Adds onto values
             this.setSleep(this.getSleep() + 1); 
-            this.setHealth(this.getHealth() + 1); 
-        // if statements if the value is equal to or over it's current cap
-        } if (this.getSleep() >= this.getSleepCap()) {
+            this.setHealth(this.getHealth() + 1);
+            
+        // if statements if the value is over it's current cap
+        } if (this.getSleep() > this.getSleepCap()) {
             this.setSleep(this.getSleepCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " isn't tired enough to go to sleep.");
-        } if (this.getHealth() >= this.getHealthCap()) {
+        } if (this.getHealth() > this.getHealthCap()) {
             this.setHealth(this.getHealthCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too healthy.");
         }

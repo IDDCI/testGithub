@@ -4,6 +4,8 @@
  */
 package testgithub;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author DDC
@@ -149,34 +151,37 @@ public abstract class Animal{
 
     // Check if animal has 0 happiness
     public void sadness() {
-        if (this.getHappiness() <= 5 && this.getHappiness() > 0) { // Inform user when pet is getting low happiness
-            System.out.println(this.getAnimalName() + " is growing sad, make them happy"); 
-        }
+        //if (this.getHappiness() <= 5 && this.getHappiness() > 0) { // Inform user when pet is getting low happiness
+            //JOptionPane.showMessageDialog(null, this.getAnimalName() + " is growing sad, make them happy");
+        //}
         if (this.getHappiness() == 0) { // Deletes animal from txt files if happiness is 0
-            System.out.println(this.getAnimalName() + " has grown too sad and has died (x.x)");
+            //JOptionPane.showMessageDialog(null, this.getAnimalName() + " has grown too sad and has died (x.x)");
             this.setDeleteAnimal(true);
+            this.setUserExits(true);
         }
     }
 
     // Check if animal has 0 health
     public void unwell() {
-        if (this.getHealth() <= 5 && this.getHealth() > 0) { // Infrom user when pet has low health
-            System.out.println(this.getAnimalName() + " is becoming unwell, help them get better.");
-        }
+        //if (this.getHealth() <= 5 && this.getHealth() > 0) { // Infrom user when pet has low health
+            //JOptionPane.showMessageDialog(null, this.getAnimalName() + " is becoming unwell, help them get better.");
+        //}
         if (this.getHealth() == 0) {// Deletes animal from txt files if health is 0
-            System.out.println(this.getAnimalName() + " has become unwell and has died (x.x)");
+            //JOptionPane.showMessageDialog(null, this.getAnimalName() + " has become unwell and has died (x.x)");
             this.setDeleteAnimal(true);
+            this.setUserExits(true);
         }
     }
 
     // Check if animal has 0 hunger
     public void starve() {
-        if (this.getHunger() <= 5 && this.getHunger() > 0) { // Inform user when pet has low hunger
-            System.out.println(this.getAnimalName() + " is going to starve, feed them.");
-        }
+        //if (this.getHunger() <= 5 && this.getHunger() > 0) { // Inform user when pet has low hunger
+            //JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to starve, feed them.");
+        //}
         if (this.getHunger() == 0) { // Deletes animal from txt files if hunger is 0
-            System.out.println(this.getAnimalName() + " has starved to death and died (x.x)");
+            //JOptionPane.showMessageDialog(null, this.getAnimalName() + " has starved to death and died (x.x)");
             this.setDeleteAnimal(true);
+            this.setUserExits(true);
         }
     }
 

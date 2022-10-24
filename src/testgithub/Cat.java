@@ -32,11 +32,11 @@ public class Cat extends Animal {
             lvl.updateXp();
         } 
         // If statements for when values are over or equal to their cap
-        if (this.getHunger() >= this.getHungerCap()) {
+        if (this.getHunger() > this.getHungerCap()) {
             this.setHunger(this.getHungerCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too full to eat.");
         } 
-        if (this.getHappiness() >= this.getHappinessCap()) {
+        if (this.getHappiness() > this.getHappinessCap()) {
             this.setHappiness(this.getHappinessCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }
@@ -90,7 +90,7 @@ public class Cat extends Animal {
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too healthy and cannot sleep now.");
             }
         // Else statement for when values are over or equal to their cap 
-        } if (this.getSleep() >= this.getSleepCap()) {
+        } if (this.getSleep() > this.getSleepCap()) {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " isn't tired enough to go to sleep.");
         } if (this.getHealth() < this.getHealthCap()) {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too healthy.");
