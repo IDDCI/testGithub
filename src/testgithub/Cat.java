@@ -4,6 +4,8 @@
  */
 package testgithub;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author DDC
@@ -32,11 +34,11 @@ public class Cat extends Animal {
         // If statements for when values are over or equal to their cap
         if (this.getHunger() >= this.getHungerCap()) {
             this.setHunger(this.getHungerCap());
-            System.out.println(this.getAnimalName() + " is too full to eat.");
+            JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too full to eat.");
         } 
         if (this.getHappiness() >= this.getHappinessCap()) {
             this.setHappiness(this.getHappinessCap());
-            System.out.println(this.getAnimalName() + " has reached max happiness.");
+            JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }
 
     }
@@ -57,17 +59,17 @@ public class Cat extends Animal {
                 lvl.updateXp();
             // If values are going below 0 or above the cap after the method runs
             } else if (this.getHunger() - 2 < 0) {
-                System.out.println(this.getAnimalName() + " is going to be too hungry to play.");
+                JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too hungry to play.");
             } else if (this.getSleep() - 2 < 0) {
-                System.out.println(this.getAnimalName() + " is going to be too sleepy to play.");
+                JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too sleepy to play.");
             }
         // If statement for when values are over or equal to their cap    
         } if (this.getHunger() == 1) {
-            System.out.println(this.getAnimalName() + " is too hungry to play.");
+            JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too hungry to play.");
         } if (this.getSleep() == 1) {
-            System.out.println(this.getAnimalName() + " is too sleepy to play.");
+            JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too sleepy to play.");
         } if (this.getHappiness() >= this.getHappinessCap()) {
-            System.out.println(this.getAnimalName() + " has reached max happiness.");
+            JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }
 
     }
@@ -83,15 +85,15 @@ public class Cat extends Animal {
                 this.setHealth(this.getHealth() + 2);
              // If values are going below 0 or above the cap after the method runs
             } else if (this.getSleep() + 2 > this.getSleepCap()) {
-                System.out.println(this.getAnimalName() + " is going to have too much energy when he wakes up and cannot sleep now.");
+                JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to have too much energy when he wakes up and cannot sleep now.");
             } else if (this.getHealth() + 2 > this.getHealthCap()) {
-                System.out.println(this.getAnimalName() + " is going to be too healthy and cannot sleep now.");
+                JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too healthy and cannot sleep now.");
             }
         // Else statement for when values are over or equal to their cap 
         } if (this.getSleep() >= this.getSleepCap()) {
-            System.out.println(this.getAnimalName() + " isn't tired enough to go to sleep.");
+            JOptionPane.showMessageDialog(null, this.getAnimalName() + " isn't tired enough to go to sleep.");
         } if (this.getHealth() < this.getHealthCap()) {
-            System.out.println(this.getAnimalName() + " is too healthy.");
+            JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too healthy.");
         }
     }
 
