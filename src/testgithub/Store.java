@@ -313,7 +313,7 @@ public class Store {
     }
     
     //get all items
-    public String[] getAllItems() {
+    public String[] getAllItemsString() {
         //return as string
         String[] items = new String[this.allItems.size()];
         int i=0;
@@ -366,5 +366,16 @@ public class Store {
         }
         
         return beds;
+    }
+    
+    //return items combined as hashmap
+    public HashMap getAllItemsHashMap() {
+        //combine all items into new hashmap
+        HashMap combined = new HashMap();
+        combined.putAll(bed);
+        combined.putAll(food);
+        combined.putAll(bed);
+        //return hashmap
+        return combined;
     }
 }
