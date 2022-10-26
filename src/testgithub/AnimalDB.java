@@ -31,7 +31,7 @@ public class AnimalDB {
         try{
             this.statement = this.conn.createStatement();
             this.checkExisting("ANIMAL");
-            this.statement.addBatch("CREATE TABLE ANIMAL  (ANIMALID VARCHAR(50), NAME VARCHAR(50), TYPE VARCHAR(20), LEVEL INT, "
+            this.statement.addBatch("CREATE TABLE ANIMAL (ANIMALID VARCHAR(50), NAME VARCHAR(50), TYPE VARCHAR(20), LEVEL INT, "
                     + "XP INT, HAPPINESS INT, HEALTH INT, HUNGER INT, SLEEP INT, XPCAP INT, HAPPYCAP INT, HEALTHCAP INT,"
                     + "HUNGERCAP INT, SLEEPCAP INT)");
             
