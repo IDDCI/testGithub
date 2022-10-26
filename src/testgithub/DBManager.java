@@ -41,7 +41,7 @@ public final class DBManager {
         if (this.conn == null){
             try {
                 conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-                System.out.println("Connected Successfully.");
+                System.out.println("Connected Successfully. ");
             }catch (SQLException e){
                 
                 System.out.println("Error with connecting to URL: "+URL);
