@@ -196,7 +196,7 @@ public class AnimalPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 //animal.animalDB.insertAnimal();
                 
-                animal.diconnectDB();
+                //animal.diconnectDB();
                 System.exit(0);
             }
         }

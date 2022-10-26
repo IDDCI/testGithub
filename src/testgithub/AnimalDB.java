@@ -59,25 +59,25 @@ public class AnimalDB {
         //use the conn, initialize database by creating FOOD Table
         try{
             this.statement = this.conn.createStatement();
-            this.checkExisting("INVENTORTY");
-            this.statement.addBatch("CREATE TABLE INVENTORTY (INVENTORYID INT, TYPE VARCHAR(50),  ITEM VARCHAR(50))");
-            this.statement.addBatch("INSERT INTO INVENTORTY VALUES(1, foods, basic), (2, foods, deluxe), (3, foods, premium)"
-                    + ", (4, toys, ball), (5, toys, yarn), (6, toys, chew toy), (7, toys, mice toy), (8, toys, frisbee),"
-                    + "(9, toys, laser pointer), (10, beds, double), (11, beds, queen), (12, beds, king)");
+            this.checkExisting("INVENTORY");
+            this.statement.addBatch("CREATE TABLE INVENTORY (INVENTORYID INT, TYPE VARCHAR(50),  ITEM VARCHAR(50))");
+            this.statement.addBatch("INSERT INTO INVENTORY VALUES(1, 'foods', 'basic'), (2, 'foods', 'deluxe'), (3, 'foods', 'premium')"
+                    + ", (4, 'toys', 'ball'), (5, 'toys', 'yarn'), (6, 'toys', 'chew toy'), (7, 'toys', 'mice toy'), (8, 'toys', 'frisbee'),"
+                    + "(9, 'toys', 'laser pointer'), (10, 'beds', 'double'), (11, 'beds', 'queen'), (12, 'beds', 'king')");
             this.statement.executeBatch();
         } catch (SQLException e){
-            System.out.println("Error: Unable to create table Food");
+            System.out.println("Error: Unable to create table Inventory");
         }
     }
     
     public void insertInventory(String ID, String item){
         try{
             this.statement = this.conn.createStatement();
-            this.statement.addBatch("INSERT INTO INVENTORTY ("+ID+", "+ item+")");
+            this.statement.addBatch("INSERT INTO INVENTORY ("+ID+", "+ item+")");
             
             this.statement.executeBatch();
         } catch (SQLException e){
-            System.out.println("Error: Unable to create table Food");
+            System.out.println("Error: Unable to insert in Inventory table");
         }
     }
     
@@ -85,22 +85,22 @@ public class AnimalDB {
         try{
             this.statement = this.conn.createStatement();
             this.checkExisting("ANIMAL_INVENTORY");
-            this.statement.addBatch("CREATE TABLE ANIMAL_INVENTORTY (INVENTORYID INT, ANIMALID VARCHAR(50))");
+            this.statement.addBatch("CREATE TABLE ANIMAL_INVENTORY (INVENTORYID INT, ANIMALID VARCHAR(50))");
             
             this.statement.executeBatch();
         } catch (SQLException e){
-            System.out.println("Error: Unable to create table Food");
+            System.out.println("Error: Unable to create table Animal Inventory");
         }
     }
     
     public void insertAnimalInvenDB(int inventoryID){
         try{
             this.statement = this.conn.createStatement();
-            this.statement.addBatch("INSERT INTO ANIMAL_INVENTORTY ("+inventoryID+", "+key+")");
+            this.statement.addBatch("INSERT INTO ANIMAL_INVENTORY ("+inventoryID+", "+key+")");
             
             this.statement.executeBatch();
         } catch (SQLException e){
-            System.out.println("Error: Unable to create table Food");
+            System.out.println("Error: Unable to insert in table Animal Inventory");
         }
     }
     
@@ -113,10 +113,10 @@ public class AnimalDB {
             ResultSet result = MetaData.getTables(null, null, null, types);
             while (result.next()) {
                 String tableTitle = result.getString("TABLE_NAME");
-                System.out.println("Table '"+tableTitle+"' exists.");
+                //System.out.println("Table '"+tableTitle+"' exists.");
                 if (tableTitle.equalsIgnoreCase(name)){
                     statement.executeUpdate("Drop table "+name);
-                    System.out.println("The table '"+name+"' has been deleted.");
+                    //System.out.println("The table '"+name+"' has been deleted.");
                     break;
                 }
             }
