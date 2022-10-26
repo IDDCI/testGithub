@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -29,7 +28,8 @@ public class StorePanel extends JPanel implements ActionListener {
     JComboBox filterBox;
     JScrollPane itemPane;
     String[] itemListArray;
-    JList foodList, bedList, toyList, allItemsList;
+    String[] foodList, bedList, toyList, allItemsList;
+    JList displayedList;
     HashMap allItemsHashMap;
     Animal animal;
     
@@ -79,13 +79,15 @@ public class StorePanel extends JPanel implements ActionListener {
         this.allItemsHashMap = new HashMap();
         this.allItemsHashMap = animal.store.getAllItemsHashMap();
             //getting category list as strings
-        this.foodList = new JList(this.animal.store.getFoods());
-        this.bedList = new JList(this.animal.store.getBeds());
-        this.toyList = new JList(this.animal.store.getToys());
+        this.allItemsList = animal.store.getAllItemsString();
+        this.foodList = animal.store.getFoods();
+        this.bedList = animal.store.getBeds();
+        this.toyList = animal.store.getToys();
+        
             //adding to jlist
-        this.allItemsList = new JList(this.animal.store.getAllItemsString());
+        this.displayedList = new JList(this.animal.store.getAllItemsString());
             //adding jlist to scrollpane
-        this.itemPane = new JScrollPane(this.allItemsList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        this.itemPane = new JScrollPane(this.displayedList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.itemPane.setLocation(480, 100);
         this.itemPane.setSize(420,420);
@@ -102,6 +104,7 @@ public class StorePanel extends JPanel implements ActionListener {
         
         //add filter droplist
         this.filterBox = new JComboBox <String>();
+        this.filterBox.addItem("All");
         this.filterBox.addItem("Foods");
         this.filterBox.addItem("Toys");
         this.filterBox.addItem("Beds");
@@ -117,8 +120,29 @@ public class StorePanel extends JPanel implements ActionListener {
         this.filterButton.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
-                       
+                        String filterOption;
+                        filterOption = filterBox.getSelectedItem().toString();
+                        
+                        if (filterOption.equals("All")) {
+                            displayedList.setListData(allItemsList);
+                            itemPane.setViewportView(displayedList);
+                            
+                        }
+                        if (filterOption.equals("Foods")) {
+                            displayedList.setListData(foodList);
+                            itemPane.setViewportView(displayedList);
+                            
+                        }
+                        if (filterOption.equals("Toys")) {
+                            displayedList.setListData(toyList);
+                        }
+                        if (filterOption.equals("Beds")) {
+                            displayedList.setListData(bedList);
+                        }
+                            
+                        update();
                     }
+                   
                 }
         );
         
@@ -132,10 +156,11 @@ public class StorePanel extends JPanel implements ActionListener {
                 public void actionPerformed(ActionEvent e){
                     for (Object item: allItemsHashMap.keySet()) {
                         try{
-                            if (allItemsList.getSelectedValue().equals(item))
+                            if (displayedList.getSelectedValue().equals(item))
                             {
                                 if (animal.store.money.getAmount() >= Integer.valueOf((String)allItemsHashMap.get(item))) {
                                     //add to inventory
+                                    addToInventory(item);
                                     
                                     //withdraw amount
                                     animal.store.money.withdrawAmount(Integer.valueOf((String)allItemsHashMap.get(item)));
@@ -163,9 +188,33 @@ public class StorePanel extends JPanel implements ActionListener {
         return this.backButton;
     }
     
+    public void addToInventory(Object item) {
+        //check if item is in food list
+        for (int i=0; i<this.foodList.length-1; i++) {
+            if (this.foodList[i].equals(item)) {
+                animal.store.inventory.addFood((String)item);
+            }
+        }
+        
+        //check if item is in bed list
+        for (int i=0; i<this.bedList.length-1; i++) {
+            if (this.bedList[i].equals(item)) {
+                animal.store.inventory.addBed((String)item);
+            }
+        }
+        
+        //check if item is in toy list
+        for (int i=0; i<this.toyList.length-1; i++) {
+            if (this.toyList[i].equals(item)) {
+                animal.store.inventory.addToy((String)item);
+            }
+        }
+    }
+    
+    //update user view
     public void update() {
-        System.out.println(this.animal.store.money.getAmount());
         this.displayCoins.setText("Coins: $"+this.animal.store.money.getAmount()); 
+        
         
     }
     @Override

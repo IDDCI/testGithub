@@ -18,7 +18,7 @@ public class Level {
     
     // Default Constructor
     public Level(Animal animal){
-        this.level = 1;
+        this.level = 5;
         this.animal = animal;
     }
     
