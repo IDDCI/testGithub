@@ -41,7 +41,7 @@ public abstract class Animal{
     Thread hungerThread;
     Thread sleepThread;
     
-    
+    AnimalDB animalDB;
     
     // Default constructor
     public Animal(String animalName) {
@@ -61,6 +61,11 @@ public abstract class Animal{
         
         // Set userExit to false until they want to exit
         this.userExits = false;
+        
+        animalDB = new AnimalDB();
+        animalDB.createAnimalDB();
+        animalDB.createInventoryBD();
+        animalDB.createAnimalInvenDB();
     }
     
     public void startingThreads(){
@@ -197,6 +202,10 @@ public abstract class Animal{
     public String toString() {
         // Display animal's name and lvl, current xp and xp cap
         return this.getAnimalName() + " is level " + lvl.getLevel()+" |current xp: "+lvl.getXp()+"/"+lvl.getLevelXpCap()+"|";
+    }
+    
+    public void diconnectDB(){
+        animalDB.disconnect();
     }
     
     // Getters and setters

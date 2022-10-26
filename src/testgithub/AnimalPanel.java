@@ -35,7 +35,7 @@ public class AnimalPanel extends JPanel {
     JButton play, feed, sleep, store, exit, instructions;
     // variable for when the pet is sleeping  
     String sleeping;
-    int counter;
+    int sleepCounter;
 
     // Objects to connect to other classes
     Animal animal;
@@ -48,7 +48,7 @@ public class AnimalPanel extends JPanel {
     // Toys
     // Food
     public AnimalPanel() {
-
+        
         setLayout(null);
         super.setBackground(Color.pink); //set background to pink
 
@@ -170,7 +170,7 @@ public class AnimalPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 animal.sleeping();
                 sleeping = "sleeping";
-                counter = 0;
+                sleepCounter = 0;
             }
         }
         );
@@ -194,6 +194,9 @@ public class AnimalPanel extends JPanel {
         this.exit.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //animal.animalDB.insertAnimal();
+                
+                animal.diconnectDB();
                 System.exit(0);
             }
         }
@@ -251,12 +254,12 @@ public class AnimalPanel extends JPanel {
             }
 
             // if you put animal to sleep
-            if ("sleeping".equals(this.sleeping) && counter < 1750) {
+            if ("sleeping".equals(this.sleeping) && sleepCounter < 1750) {
                 g.drawImage(sleepyDC, 300, 150, this);
-                counter++;
+                sleepCounter++;
             }
             
-            if (counter == 1750){
+            if (sleepCounter == 1750){
                 sleeping = null;
             }
 

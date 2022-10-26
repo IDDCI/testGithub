@@ -1,0 +1,14 @@
+Wed Oct 26 14:21:49 NZDT 2022 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Wed Oct 26 14:21:50 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-11e1-006d-ffffa3c16762 
+on database directory /Users/DDC/NetBeansProjects/testGithub/AnimalDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@55054057 
+Loaded from file:/Users/DDC/Downloads/db-derby-10.14.2.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=12.0.2+10
+user.dir=/Users/DDC/Downloads/db-derby-10.14.2.0-bin
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.16
+derby.system.home=/Users/DDC/NetBeansProjects/testGithub
+Database Class Loader started - derby.database.classpath=''
