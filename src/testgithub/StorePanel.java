@@ -8,11 +8,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -22,13 +24,13 @@ import javax.swing.ScrollPaneConstants;
  */
 public class StorePanel extends JPanel implements ActionListener {
     //instance variables
-    JButton buyButton, backButton, searchButton;
+    JButton buyButton, backButton, filterButton;
     JLabel storeTitle, displayCoins, filterLabel;
     JComboBox filterBox;
     JScrollPane itemPane;
     String[] itemListArray;
     JList foodList, bedList, toyList, allItemsList;
-    
+    HashMap allItemsHashMap;
     Animal animal;
     
     
@@ -66,18 +68,23 @@ public class StorePanel extends JPanel implements ActionListener {
         this.displayCoins = new JLabel();
             //get money amount from money class
         this.displayCoins.setText("Coins: $"+this.animal.store.money.getAmount()); 
-        this.displayCoins.setLocation(100, 60);
+        this.displayCoins.setLocation(100, 70);
         this.displayCoins.setSize(220,100);
         this.displayCoins.setFont(new Font("Serif", Font.PLAIN, 30));
         this.displayCoins.setVisible(true);
         this.add(displayCoins);
         
         //adding items to item pane
+            //getting all items as hashmap
+        this.allItemsHashMap = new HashMap();
+        this.allItemsHashMap = animal.store.getAllItemsHashMap();
+            //getting category list as strings
         this.foodList = new JList(this.animal.store.getFoods());
         this.bedList = new JList(this.animal.store.getBeds());
         this.toyList = new JList(this.animal.store.getToys());
-        this.allItemsList = new JList(this.animal.store.getAllItems());
-        
+            //adding to jlist
+        this.allItemsList = new JList(this.animal.store.getAllItemsString());
+            //adding jlist to scrollpane
         this.itemPane = new JScrollPane(this.allItemsList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.itemPane.setLocation(480, 100);
@@ -85,17 +92,70 @@ public class StorePanel extends JPanel implements ActionListener {
         this.itemPane.setVisible(true);
         this.add(itemPane);
         
+        //add filter label
+        this.filterLabel = new JLabel();
+        this.filterLabel.setText("Filter By:"); 
+        this.filterLabel.setLocation(105, 140);
+        this.filterLabel.setSize(220,100);
+        this.filterLabel.setVisible(true);
+        this.add(filterLabel);
+        
+        //add filter droplist
+        this.filterBox = new JComboBox <String>();
+        this.filterBox.addItem("Foods");
+        this.filterBox.addItem("Toys");
+        this.filterBox.addItem("Beds");
+        this.filterBox.setLocation(100, 205);
+        this.filterBox.setSize(170,35);
+        this.add(this.filterBox);
+        
+        //add filter button
+        this.filterButton = new JButton("Filter");
+        this.filterButton.setLocation(100, 245);
+        this.filterButton.setSize(100, 25);
+        this.add(filterButton); 
+        this.filterButton.addActionListener(
+                new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                       
+                    }
+                }
+        );
+        
         //Buy button
         this.buyButton = new JButton("Buy");
         this.buyButton.setLocation(700, 560);
         this.buyButton.setSize(100, 25);
         this.add(buyButton); 
         this.buyButton.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e){
-                       
+            new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    for (Object item: allItemsHashMap.keySet()) {
+                        try{
+                            if (allItemsList.getSelectedValue().equals(item))
+                            {
+                                if (animal.store.money.getAmount() >= Integer.valueOf((String)allItemsHashMap.get(item))) {
+                                    //add to inventory
+                                    
+                                    //withdraw amount
+                                    animal.store.money.withdrawAmount(Integer.valueOf((String)allItemsHashMap.get(item)));
+                                    System.out.println(item);
+                                }
+                                else
+                                    JOptionPane.showMessageDialog(null, "You don't have enough coins to make this purchase!\n"
+                                            + "Play with your pet to earn more coins");
+                            }
+                        //if no items are selected
+                        } catch(NullPointerException exception) {
+                            JOptionPane.showMessageDialog(null, "You haven't selected an item!");
+                        }
+                        
                     }
+                    //update coins on screen
+                    update();
                 }
+                
+            }
         );
     }
     

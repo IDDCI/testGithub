@@ -49,5 +49,8 @@ public class Inventory {
         return this.toy;
     }
     
-    
+    //process which array to add bought item to
+    public void processAndAddItem(String item) {
+        
+    }
 }
