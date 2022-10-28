@@ -14,7 +14,7 @@ public class Money {
     
     //default constructor
     public Money() {
-        this.currentAmount = 1000000;
+        this.currentAmount = 10;
     }
     
     //method to add to current amount

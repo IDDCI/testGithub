@@ -318,7 +318,7 @@ public class Store {
         String[] items = new String[this.allItems.size()];
         int i=0;
         for (int j=0; j<this.allItems.size(); j++) {
-            items[i] = (String)this.allItems.get(i);
+            items[i] = (String)this.allItems.get(i) + "\t$" + this.all;
             i++;
         }
         
@@ -333,7 +333,7 @@ public class Store {
         //traverse and add foods to string array
         for (Object fooditem: this.food.keySet())
         {
-            foods[i] = fooditem.toString();
+            foods[i] = fooditem.toString() + "\t$" +this.food.get(fooditem);
             i++;
         }
         
