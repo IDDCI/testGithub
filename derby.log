@@ -1,20 +1,13 @@
-Fri Oct 28 12:46:58 NZDT 2022 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Fri Oct 28 12:46:58 NZDT 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-1bd7-7d81-00007bdec69f 
-on database directory /Users/jennylim/testinghub1/testGithub/AnimalDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
-Loaded from file:/Users/jennylim/Downloads/db-derby-10.14.2.0-bin/lib/derby.jar
+Fri Oct 28 23:07:03 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-1e0f-3141-0000077fa000 
+on database directory /Users/DDC/NetBeansProjects/testGithub/AnimalDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@355da254 
+Loaded from file:/Users/DDC/NetBeansProjects/testGithub/lib%20/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=17.0.2+8-LTS-86
-user.dir=/Users/jennylim/Downloads/db-derby-10.14.2.0-bin
+java.runtime.version=12.0.2+10
+user.dir=/Users/DDC/NetBeansProjects/testGithub
 os.name=Mac OS X
 os.arch=x86_64
-os.version=10.15.1
-derby.system.home=/Users/jennylim/testinghub1/testGithub
+os.version=10.16
+derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Fri Oct 28 13:24:21 NZDT 2022: Shutting down Derby engine
-----------------------------------------------------------------
-Fri Oct 28 13:24:21 NZDT 2022:
-Shutting down instance a816c00e-0184-1bd7-7d81-00007bdec69f on database directory /Users/jennylim/testinghub1/testGithub/AnimalDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
-----------------------------------------------------------------
