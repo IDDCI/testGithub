@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.TimerTask;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 
 /**
@@ -40,6 +39,8 @@ public class AnimalPanel extends JPanel {
     String playing;
     int playCounter;
     String toyChosen;
+    Random random = new Random();
+    int randomIndex;
 
     // Objects to connect to other classes
     Animal animal;
@@ -135,7 +136,7 @@ public class AnimalPanel extends JPanel {
                     laserPointer = new ImageIcon("./src/virtualpet/Images/Toys/laserPointer.png").getImage();
                     miceToy = new ImageIcon("./src/virtualpet/Images/Toys/miceToy.png").getImage();
                     yarn = new ImageIcon("./src/virtualpet/Images/Toys/yarn.png").getImage();
-
+                    
                     // Load in food images
                     basic = new ImageIcon("./src/virtualpet/Images/Food/Basic.png").getImage();
                     deluxe = new ImageIcon("./src/virtualpet/Images/Food/Deluxe.png").getImage();
@@ -171,10 +172,24 @@ public class AnimalPanel extends JPanel {
                 if (!animal.store.inventory.getToyArray().isEmpty()) {
 
                     //randomly generate a toy img from inventory
-                    randomIndex = random.nextInt((anima.store.inventory.getToyArray().size()));
-                    String toy = (String) anima.store.inventory.getToyArray().get(randomIndex);
+                    randomIndex = random.nextInt((animal.store.inventory.getToyArray().size()));
+                    toyChosen = (String) animal.store.inventory.getToyArray().get(randomIndex);
+                    
+                    if (null != toyChosen)
+                        switch (toyChosen) {
+                        case "chew toy":
+                            toyChosen = "chewToy";
+                            break;
+                        case "laser pointer":
+                            toyChosen = "laserPointer";
+                            break;
+                        case "mice toy":
+                            toyChosen = "miceToy";
+                            break;
+                        default:
+                            break;
+                    }
 
-                    saveload.loadToyImage(toy);
                 }
 
                 animal.play();
@@ -308,7 +323,7 @@ public class AnimalPanel extends JPanel {
 
             // if you play with animal
             if ("playing".equals(this.playing) && playCounter < 1500) {
-                //g.drawImage(sleepyDC, 300, 150, this);
+                g.drawImage(toyChosen, 300, 150, this);
                 play.setEnabled(false);
                 feed.setEnabled(false);
                 sleep.setEnabled(false);
