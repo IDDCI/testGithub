@@ -36,6 +36,10 @@ public class AnimalPanel extends JPanel {
     // variable for when the pet is sleeping  
     String sleeping;
     int sleepCounter;
+    // variable for when the pet is playing
+    String playing;
+    int playCounter;
+    String toyChosen;
 
     // Objects to connect to other classes
     Animal animal;
@@ -46,9 +50,13 @@ public class AnimalPanel extends JPanel {
     Image diedDC, happyDC, sleepyDC, wantDC;
 
     // Toys
+    Image ball, chewToy, frisbee, laserPointer, miceToy, yarn;
+
     // Food
+    Image basic, deluxe, premium;
+
     public AnimalPanel() {
-        
+
         setLayout(null);
         super.setBackground(Color.pink); //set background to pink
 
@@ -120,6 +128,19 @@ public class AnimalPanel extends JPanel {
                         diedDC = new ImageIcon("./src/virtualpet/Images/Cat/Died.png").getImage();
                     }
 
+                    // Load in toy images
+                    ball = new ImageIcon("./src/virtualpet/Images/Toys/Ball.png").getImage();
+                    chewToy = new ImageIcon("./src/virtualpet/Images/Toys/ChewToy.png").getImage();
+                    frisbee = new ImageIcon("./src/virtualpet/Images/Toys/frisbee.png").getImage();
+                    laserPointer = new ImageIcon("./src/virtualpet/Images/Toys/laserPointer.png").getImage();
+                    miceToy = new ImageIcon("./src/virtualpet/Images/Toys/miceToy.png").getImage();
+                    yarn = new ImageIcon("./src/virtualpet/Images/Toys/yarn.png").getImage();
+
+                    // Load in food images
+                    basic = new ImageIcon("./src/virtualpet/Images/Food/Basic.png").getImage();
+                    deluxe = new ImageIcon("./src/virtualpet/Images/Food/Deluxe.png").getImage();
+                    premium = new ImageIcon("./src/virtualpet/Images/Food/Premium.png").getImage();
+
                     // Adds new components
                     add(play);
                     add(feed);
@@ -143,6 +164,19 @@ public class AnimalPanel extends JPanel {
         this.play.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                playing = "playing";
+                playCounter = 0;
+
+                //check if the list is empty, if it is empty then the pet has no toys to play with
+                if (!animal.store.inventory.getToyArray().isEmpty()) {
+
+                    //randomly generate a toy img from inventory
+                    randomIndex = random.nextInt((anima.store.inventory.getToyArray().size()));
+                    String toy = (String) anima.store.inventory.getToyArray().get(randomIndex);
+
+                    saveload.loadToyImage(toy);
+                }
+
                 animal.play();
 
             }
@@ -168,9 +202,10 @@ public class AnimalPanel extends JPanel {
         this.sleep.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                animal.sleeping();
                 sleeping = "sleeping";
                 sleepCounter = 0;
+                animal.sleeping();
+
             }
         }
         );
@@ -195,7 +230,7 @@ public class AnimalPanel extends JPanel {
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //animal.animalDB.insertAnimal();
-                
+
                 //animal.diconnectDB();
                 System.exit(0);
             }
@@ -254,13 +289,39 @@ public class AnimalPanel extends JPanel {
             }
 
             // if you put animal to sleep
-            if ("sleeping".equals(this.sleeping) && sleepCounter < 1750) {
+            if ("sleeping".equals(this.sleeping) && sleepCounter < 1500) {
                 g.drawImage(sleepyDC, 300, 150, this);
+                play.setEnabled(false);
+                feed.setEnabled(false);
+                sleep.setEnabled(false);
+                store.setEnabled(false);
                 sleepCounter++;
             }
-            
-            if (sleepCounter == 1750){
+
+            if (sleepCounter == 1500) {
                 sleeping = null;
+                play.setEnabled(true);
+                feed.setEnabled(true);
+                sleep.setEnabled(true);
+                store.setEnabled(true);
+            }
+
+            // if you play with animal
+            if ("playing".equals(this.playing) && playCounter < 1500) {
+                //g.drawImage(sleepyDC, 300, 150, this);
+                play.setEnabled(false);
+                feed.setEnabled(false);
+                sleep.setEnabled(false);
+                store.setEnabled(false);
+                playCounter++;
+            }
+
+            if (playCounter == 1500) {
+                playing = null;
+                play.setEnabled(true);
+                feed.setEnabled(true);
+                sleep.setEnabled(true);
+                store.setEnabled(true);
             }
 
             //check animal stats are too low
@@ -287,8 +348,7 @@ public class AnimalPanel extends JPanel {
             g.drawString("Health: " + animal.getHealth(), 260, 440);
             g.drawString("Hunger: " + animal.getHunger(), 260, 455);
             g.drawString("Sleep: " + animal.getSleep(), 260, 470);
-            
-            
+
         }
         repaint();
 
