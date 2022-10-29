@@ -154,32 +154,24 @@ public class StorePanel extends JPanel implements ActionListener {
         this.buyButton.addActionListener(
             new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    for (Object item: allItemsHashMap.keySet()) {
-                        try{
-                            if (displayedList.getSelectedValue().equals(item))
-                            {
-                                if (animal.store.money.getAmount() >= Integer.valueOf((String)allItemsHashMap.get(item))) {
-                                    //add to inventory
-                                    addToInventory(item);
-                                    
-                                    //withdraw amount
-                                    animal.store.money.withdrawAmount(Integer.valueOf((String)allItemsHashMap.get(item)));
-                                    System.out.println(item);
-                                }
-                                else
-                                    JOptionPane.showMessageDialog(null, "You don't have enough coins to make this purchase!\n"
-                                            + "Play with your pet to earn more coins");
-                            }
-                        //if no items are selected
-                        } catch(NullPointerException exception) {
-                            JOptionPane.showMessageDialog(null, "You haven't selected an item!");
+                    try{
+                        //check if purchase was successful
+                        if (animal.store.buyItem((String)displayedList.getSelectedValue()))
+                        {
+                            JOptionPane.showMessageDialog(null, "Purchase Successful!\n"
+                            +displayedList.getSelectedValue()+ " added to inventory");
                         }
-                        
+                        //otherwise display message saying they do not have enough money
+                        else
+                             JOptionPane.showMessageDialog(null, "You don't have enough to make this purchase!");
+                    }
+                        //if no items are selected
+                    catch(NullPointerException exception) {
+                        JOptionPane.showMessageDialog(null, "You haven't selected an item!");
                     }
                     //update coins on screen
                     update();
                 }
-                
             }
         );
     }
@@ -188,28 +180,7 @@ public class StorePanel extends JPanel implements ActionListener {
         return this.backButton;
     }
     
-    public void addToInventory(Object item) {
-        //check if item is in food list
-        for (int i=0; i<this.foodList.length-1; i++) {
-            if (this.foodList[i].equals(item)) {
-                animal.store.inventory.addFood((String)item);
-            }
-        }
-        
-        //check if item is in bed list
-        for (int i=0; i<this.bedList.length-1; i++) {
-            if (this.bedList[i].equals(item)) {
-                animal.store.inventory.addBed((String)item);
-            }
-        }
-        
-        //check if item is in toy list
-        for (int i=0; i<this.toyList.length-1; i++) {
-            if (this.toyList[i].equals(item)) {
-                animal.store.inventory.addToy((String)item);
-            }
-        }
-    }
+    
     
     //update user view
     public void update() {
