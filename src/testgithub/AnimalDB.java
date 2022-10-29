@@ -71,8 +71,38 @@ public class AnimalDB {
             this.statement.addBatch("DELETE FROM ANIMAL WHERE ANIMALID='"+key+"';");
             this.statement.addBatch("DELETE FROM ANIMAL_INVENTORY WHERE ANIMALID='"+key+"';");
             this.statement.executeBatch();
+            System.out.println("Animal Deleted");
         } catch (SQLException e) {
             System.out.println("Error: Unable to delete animal");
+        }
+    }
+    
+    // Check table for saved data
+    public void retrieveAnimal(){
+        ResultSet rs = null;
+        try {
+            this.statement = this.conn.createStatement();
+            String sqlQuery = "SELECT NAME, TYPE, LEVEL, XP, HAPPINESS, HEALTH, HUNGER, SLEEP, XPCAP, "
+                    + "HAPPYCAP, HEALTHCAP, HUNGERCAP, SLEEPCAP, MONEY FROM ANIMAL WHERE ANIMALID='"+key+"'";
+            rs = statement.executeQuery(sqlQuery);
+            while(rs.next()){
+                animal.setName(rs.getString("NAME"));
+                animal.setAnimalType(rs.getString("TYPE"));
+                animal.lvl.setLevel(rs.getInt("LEVEL"));
+                animal.lvl.setXp(rs.getInt("XP"));
+                animal.setHappiness(rs.getInt("HAPPINESS"));
+                animal.setHealth(rs.getInt("HEALTH"));
+                animal.setHunger(rs.getInt("HUNGER"));
+                animal.setSleep(rs.getInt("SLEEP"));
+                animal.lvl.setLevelXpCap(rs.getInt("XPCAP"));
+                animal.setHappinessCap(rs.getInt("HAPPYCAP"));
+                animal.setHealthCap(rs.getInt("HEALTHCAP"));
+                animal.setHungerCap(rs.getInt("HUNGERCAP"));
+                animal.setSleepCap(rs.getInt("SLEEPCAP"));
+                animal.store.money.setAmount(rs.getDouble("MONEY"));
+            }
+        } catch (SQLException e) {
+            System.out.println("No animal of that ID found. New pet being created");
         }
     }
 

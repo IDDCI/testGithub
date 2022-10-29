@@ -130,6 +130,9 @@ public class AnimalPanel extends JPanel {
                         wantDC = new ImageIcon("./src/virtualpet/Images/Cat/want.png").getImage();
                         diedDC = new ImageIcon("./src/virtualpet/Images/Cat/Died.png").getImage();
                     }
+                    
+                    // check if animal already exist and if they do override current stats
+                    animal.animalDB.retrieveAnimal();
 
                     // Load in toy images
                     ball = new ImageIcon("./src/virtualpet/Images/Toys/Ball.png").getImage();
@@ -250,6 +253,9 @@ public class AnimalPanel extends JPanel {
                 // sets it to true to stop threads and save into database
                 animal.setUserExits(true);
                 if (animal.getAnimalName() != null && animal.getAnimalType() != null && animal.getDeleteAnimal() == false){
+                    // Delete prevoiusly saved data
+                    animal.animalDB.deleteAnimal();
+                    // Save data
                     //animal.animalDB.insertAnimal();
                 }
                 
