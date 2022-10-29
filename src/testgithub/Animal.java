@@ -63,10 +63,14 @@ public abstract class Animal{
         this.userExits = false;
         
         // Connect to Database
-        animalDB = new AnimalDB(animalName, getAnimalType());
-        //animalDB.createAnimalDB();
-        //animalDB.createInventoryBD();
-        //animalDB.createAnimalInvenDB();
+        animalDB = new AnimalDB(animalName, getAnimalType(), this);
+        animalDB.createAnimalDB();
+        animalDB.createStoreDB();
+        
+        //get store items
+        animalDB.retrieveStoreDB();
+        
+        animalDB.createAnimalInvenDB();
     }
     
     public void startingThreads(){
@@ -283,7 +287,8 @@ public abstract class Animal{
     }
     
     public String getAnimalType() {
-        return animalType;
+        //returns the name of the subclass of this animal class
+        return this.getClass().getSimpleName();
     }
 
     public void setAnimalType(String animalType) {

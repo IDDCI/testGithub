@@ -97,7 +97,7 @@ public class Store {
     //get all items return as string with prices
     public String[] getAllItemsString() {
         //return as string
-        String[] items = new String[this.allItems.size()];
+        String[] items = new String[20];
         int i=0;
         
         for (Object bedItem: this.bed.keySet()) {

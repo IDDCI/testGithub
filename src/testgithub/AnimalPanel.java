@@ -1,6 +1,7 @@
 package testgithub;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -62,8 +63,17 @@ public class AnimalPanel extends JPanel {
         setLayout(null);
         super.setBackground(Color.pink); //set background to pink
 
+        //title
+        //add Store title
+        this.title = new JLabel();
+        this.title.setText("Virtual Pet Game");
+        this.title.setLocation(330, 0);
+        this.title.setSize(500, 100);
+        this.title.setFont(new Font("Serif", Font.PLAIN, 50));
+        this.title.setVisible(true);
+        this.add(title);
+
         // Ask for type of animal
-        // title
         this.typeQ = new JLabel("Animal Type:");
         this.typeQ.setLocation(350, 200);
         this.typeQ.setSize(100, 25);
@@ -102,7 +112,7 @@ public class AnimalPanel extends JPanel {
                 // Stores animal type and name
                 Type = (String) animalType.getSelectedItem();
                 // Makes first letter capital and the rest lower case
-                Name = animalName.getText().substring(0,1).toUpperCase() + animalName.getText().substring(1).toLowerCase();
+                Name = animalName.getText().substring(0, 1).toUpperCase() + animalName.getText().substring(1).toLowerCase();
 
                 // Checks if name entered by user is empty or not
                 if (!"".equals(Name.trim()) && Name != null) { // if name not empty
@@ -130,7 +140,7 @@ public class AnimalPanel extends JPanel {
                         wantDC = new ImageIcon("./src/virtualpet/Images/Cat/want.png").getImage();
                         diedDC = new ImageIcon("./src/virtualpet/Images/Cat/Died.png").getImage();
                     }
-                    
+
                     // check if animal already exist and if they do override current stats
                     animal.animalDB.retrieveAnimal();
 
@@ -141,7 +151,7 @@ public class AnimalPanel extends JPanel {
                     laserPointer = new ImageIcon("./src/virtualpet/Images/Toys/laserPointer.png").getImage();
                     miceToy = new ImageIcon("./src/virtualpet/Images/Toys/miceToy.png").getImage();
                     yarn = new ImageIcon("./src/virtualpet/Images/Toys/yarn.png").getImage();
-                    
+
                     // Load in food images
                     basic = new ImageIcon("./src/virtualpet/Images/Food/Basic.png").getImage();
                     deluxe = new ImageIcon("./src/virtualpet/Images/Food/Deluxe.png").getImage();
@@ -181,19 +191,20 @@ public class AnimalPanel extends JPanel {
                     randomIndex = random.nextInt((animal.store.inventory.getToyArray().size()));
                     toyChosen = (String) animal.store.inventory.getToyArray().get(randomIndex);
                     System.out.println(toyChosen);
-                    if (null != toyChosen)
+                    if (null != toyChosen) {
                         switch (toyChosen) {
-                        case "chew toy":
-                            toyChosen = "chewToy";
-                            break;
-                        case "laser pointer":
-                            toyChosen = "laserPointer";
-                            break;
-                        case "mice toy":
-                            toyChosen = "miceToy";
-                            break;
-                        default:
-                            break;
+                            case "chew toy":
+                                toyChosen = "chewToy";
+                                break;
+                            case "laser pointer":
+                                toyChosen = "laserPointer";
+                                break;
+                            case "mice toy":
+                                toyChosen = "miceToy";
+                                break;
+                            default:
+                                break;
+                        }
                     }
 
                 }
@@ -235,12 +246,6 @@ public class AnimalPanel extends JPanel {
         this.store = new JButton("Store");
         this.store.setLocation(350, 535);
         this.store.setSize(100, 25);
-        //this.store.addActionListener(
-        //        new ActionListener() {
-        //    public void actionPerformed(ActionEvent e) {        
-        //    }
-        //}
-        //);
 
         // Exit button
         this.exit = new JButton("Exit");
@@ -250,29 +255,37 @@ public class AnimalPanel extends JPanel {
         this.exit.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // sets it to true to stop threads and save into database
-                animal.setUserExits(true);
-                if (animal.getAnimalName() != null && animal.getAnimalType() != null && animal.getDeleteAnimal() == false){
-                    // Delete prevoiusly saved data
-                    animal.animalDB.deleteAnimal();
-                    // Save data
-                    //animal.animalDB.insertAnimal();
+                if (!"".equals(Name) && Type != null) {
+                    // sets it to true to stop threads and save into database
+                    animal.setUserExits(true);
+                    if (animal.getAnimalName() != null && animal.getAnimalType() != null && animal.getDeleteAnimal() == false) {
+                        // Delete prevoiusly saved data
+                        animal.animalDB.deleteAnimal();
+                        // Save data
+                        animal.animalDB.insertAnimal();
+
+                        //save inventory items
+                        for (int i = 0; i < animal.store.inventory.allItems.size(); i++) {
+                            animal.animalDB.insertAnimalInvenDB((String) animal.store.inventory.allItems.get(i));
+                        }
+
+                    }
+
+                    if (animal.getDeleteAnimal() == true) {
+                        //delete everything on the animal
+                        animal.animalDB.deleteAnimal();
+                    }
+
+                    // disconnects from the database
+                    animal.diconnectDB();
                 }
-                
-                if (animal.getDeleteAnimal() == true){
-                    //delete everything on the animal
-                    animal.animalDB.deleteAnimal();
-                }
-                
-                // disconnects from the database
-                animal.diconnectDB();
-                
+
                 // exits program
                 System.exit(0);
             }
         }
         );
-        
+
         // Exit button
         this.deleteAnimal = new JButton("Delete Animal");
         this.deleteAnimal.setLocation(437, 570);
@@ -282,10 +295,10 @@ public class AnimalPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // sets it to true to stop threads
                 animal.setUserExits(true);
-                
+
                 // Delete animal
                 animal.animalDB.deleteAnimal();
-                
+
                 // exits program
                 System.exit(0);
             }
@@ -363,7 +376,7 @@ public class AnimalPanel extends JPanel {
 
             // if you play with animal
             if ("playing".equals(this.playing) && playCounter < 1500) {
-                toy = new ImageIcon("./src/virtualpet/Images/Toys/"+toyChosen+".png").getImage();
+                toy = new ImageIcon("./src/virtualpet/Images/Toys/" + toyChosen + ".png").getImage();
                 //g.drawImage(, 300, 150, this);
                 play.setEnabled(false);
                 feed.setEnabled(false);

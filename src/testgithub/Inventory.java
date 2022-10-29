@@ -16,24 +16,35 @@ public class Inventory {
     ArrayList bed;
     ArrayList toy;
     
+    ArrayList allItems;
+    
     //constructor
     public Inventory() {
         this.food = new ArrayList();
         this.bed = new ArrayList();
         this.toy = new ArrayList();
+        
+        this.allItems = new ArrayList();
+        
     }
     
     //add methods
     public void addFood(String food) {
         this.food.add(food);
+        
+        this.allItems.add(food);
     }
     
     public void addBed(String bed) {
         this.bed.add(bed);
+        
+        this.allItems.add(bed);
     }
     
     public void addToy(String toy) {
         this.toy.add(toy);
+        
+        this.allItems.add(toy);
     }
     
     //get methods for loading
@@ -49,8 +60,7 @@ public class Inventory {
         return this.toy;
     }
     
-    //process which array to add bought item to
-    public void processAndAddItem(String item) {
-        
+    public ArrayList getAllItems() {
+        return this.allItems;
     }
 }

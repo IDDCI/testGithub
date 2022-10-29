@@ -22,45 +22,48 @@ public class AnimalDB {
     private Animal animal;
     private final String key;
 
-    public AnimalDB(String name, String type) {
+    public AnimalDB(String name, String type, Animal animal) {
         dbManager = new DBManager();
         conn = dbManager.getConnection();
         key = name+"_"+type; //primary key for the pet
+        
+        //connect animal object
+        this.animal = animal;
     }
 
     // insert Animal into database
     public void insertAnimal() {
+        
         try {
             this.statement = this.conn.createStatement();
-            this.statement.addBatch("INSERT INTO ANIMAL ('" + key + "', '" + animal.getAnimalName() + "', '" + animal.getAnimalType() + "', " + animal.lvl.getLevel() + ", "
+            this.statement.addBatch("INSERT INTO ANIMAL (" + key + ", " + animal.getAnimalName() + ", " + animal.getAnimalType() + ", " + animal.lvl.getLevel() + ", "
                     + animal.lvl.getXp() + ", " + animal.getHappiness() + ", " + animal.getHealth() + ", " + animal.getHunger() + ", " + animal.getSleep() + ", "
                     + animal.lvl.getLevelXpCap() + ", " + animal.getHappinessCap() + ", " + animal.getHealthCap() + ", " + animal.getHungerCap() + "," + animal.getSleepCap() + "," 
                     + animal.store.money.getAmount()+")");
             this.statement.executeBatch();
         } catch (SQLException e) {
+            System.out.println(e);
             System.out.println("Error: Unable to insert into table Animal");
         }
     }
 
     // If a new item is wanted to be added into the database
-    public void insertInventory(int ID, String type, String item, float price) {
+    public void insertAnimalInvenDB(String item) {
         try {
             this.statement = this.conn.createStatement();
-            this.statement.addBatch("INSERT INTO INVENTORY (" +ID+ ", " +type+ ", "+item+", "+price+")");
-            this.statement.executeBatch();
+            ResultSet rs = null;
+            String sqlQuery = "SELECT ITEMID, TYPE, ITEM, PRICE FROM STORE WHERE ANIMALID='"+key+"'";
+            rs = statement.executeQuery(sqlQuery);
+            
+            while(rs.next()) {
+                if (rs.getString("ITEM").equals(item)) {
+                    this.statement.addBatch("INSERT INTO ANIMAL_INVENTORY ("+rs.getFloat("ITEMID")+", "+this.key+")");
+                    this.statement.executeBatch();
+                }
+            }
+            
         } catch (SQLException e) {
             System.out.println("Error: Unable to insert in Inventory table");
-        }
-    }
-
-    // Stores items that were bought by animal
-    public void insertAnimalInvenDB(int inventoryID) {
-        try {
-            this.statement = this.conn.createStatement();
-            this.statement.addBatch("INSERT INTO ANIMAL_INVENTORY (" + inventoryID + ", '" + animal.getAnimalName() + "', '"+animal.getAnimalType()+"')");
-            this.statement.executeBatch();
-        } catch (SQLException e) {
-            System.out.println("Error: Unable to insert in table Animal Inventory");
         }
     }
     
@@ -68,8 +71,8 @@ public class AnimalDB {
     public void deleteAnimal() {
         try {
             this.statement = this.conn.createStatement();
-            this.statement.addBatch("DELETE FROM ANIMAL WHERE ANIMALID='"+key+"';");
-            this.statement.addBatch("DELETE FROM ANIMAL_INVENTORY WHERE ANIMALID='"+key+"';");
+            this.statement.addBatch("DELETE FROM ANIMAL WHERE ANIMALID='"+key+"'");
+            this.statement.addBatch("DELETE FROM ANIMAL_INVENTORY WHERE ANIMALID='"+key+"'");
             this.statement.executeBatch();
             System.out.println("Animal Deleted");
         } catch (SQLException e) {
@@ -106,6 +109,69 @@ public class AnimalDB {
         }
     }
 
+    // Check table for inventory data
+    public void retrieveAnimalInvenDB(){
+        ResultSet rs = null;
+        try {
+            this.statement = this.conn.createStatement();
+            String sqlQuery = "SELECT ITEM, TYPE, PRICE FROM STORE S, ANIMAL_INVENTORY A_I, ANIMAL A"
+                    + " WHERE A_I.ITEMID = S.ITEMID AND A_I.ANIMALID = A.ANIMALID" ;
+            rs = statement.executeQuery(sqlQuery);
+            while(rs.next()){
+                //add items to animal's inventory
+                //add to bed
+                if (rs.getString("TYPE").equals("BED")) {
+                    animal.store.inventory.bed.add(rs.getString("ITEM"));
+                }
+                //add to food
+                if (rs.getString("TYPE").equals("FOOD")) {
+                    animal.store.inventory.food.add(rs.getString("ITEM"));
+                }
+                //add to toy
+                if (rs.getString("TYPE").equals("TOY")) {
+                    animal.store.inventory.toy.add(rs.getString("ITEM"));
+                }
+                
+            }
+        } catch (SQLException e) {
+            System.out.println("No items to add to inventory");
+        }
+    }
+    
+    //retrieve store items
+    public void retrieveStoreDB() {
+        try {
+            this.statement = this.conn.createStatement();
+            ResultSet rs = null;
+
+            String sqlQuery = "SELECT ITEM, TYPE, PRICE FROM STORE";
+            rs = statement.executeQuery(sqlQuery);
+            while(rs.next()){
+                //add items in hashmaps of the store
+                //add to bed
+                if (rs.getString("TYPE").toUpperCase().equals("BEDS")) {
+                    animal.store.bed.put(rs.getString("ITEM"), rs.getDouble("PRICE"));
+                    
+                }
+                //add to food
+                if (rs.getString("TYPE").toUpperCase().equals("FOODS")) {
+                    animal.store.food.put(rs.getString("ITEM"), rs.getDouble("PRICE"));
+                }
+                //add to toy
+                if (rs.getString("TYPE").toUpperCase().equals("TOYS")) {
+                    animal.store.toy.put(rs.getString("ITEM"), rs.getDouble("PRICE"));
+                }
+
+            }
+        }
+        //catch error
+        catch(SQLException e)
+        {
+            System.out.println("Cannot retrieve items from store");
+        }
+        
+    }
+    
     public void checkExisting(String name) {
         try {
             DatabaseMetaData MetaData = this.conn.getMetaData();
@@ -141,21 +207,24 @@ public class AnimalDB {
                     + "HUNGERCAP INT NOT NULL, SLEEPCAP INT NOT NULL, MONEY FLOAT)");
             this.statement.executeBatch();
         } catch (SQLException e) {
+            System.out.println(e);
             System.out.println("Error: Unable to create table Animal");
         }
     }
     
-    public void createInventoryBD() {
+    public void createStoreDB() {
         try {
             this.statement = this.conn.createStatement();
-            this.checkExisting("INVENTORY");
-            this.statement.addBatch("CREATE TABLE INVENTORY (INVENTORYID INT NOT NULL PRIMARY KEY, TYPE VARCHAR(50),  ITEM VARCHAR(50), PRICE FLOAT)");
-            this.statement.addBatch("INSERT INTO INVENTORY VALUES(1, 'foods', 'basic', 10.5), (2, 'foods', 'deluxe', 14), (3, 'foods', 'premium', 20)"
-                    + ", (4, 'toys', 'ball', 7.5), (5, 'toys', 'yarn', 8), (6, 'toys', 'chew toy', 11), (7, 'toys', 'mice toy', 10.5), (8, 'toys', 'frisbee', 20),"
-                    + "(9, 'toys', 'laser pointer', 25), (10, 'beds', 'double', 11.5), (11, 'beds', 'queen', 23), (12, 'beds', 'king', 30)");
+            this.checkExisting("STORE");
+            this.statement.addBatch("CREATE TABLE STORE (ITEMID INT NOT NULL PRIMARY KEY, TYPE VARCHAR(50),  ITEM VARCHAR(50), PRICE FLOAT)");
+            this.statement.addBatch("INSERT INTO STORE VALUES(1, 'foods', 'basic', 10.5), (2, 'foods', 'deluxe', 14.0), (3, 'foods', 'premium', 20.0)"
+                    + ", (4, 'toys', 'ball', 7.5), (5, 'toys', 'yarn', 8.0), (6, 'toys', 'chew toy', 11.0), (7, 'toys', 'mice toy', 10.5), (8, 'toys', 'frisbee', 20.0),"
+                    + "(9, 'toys', 'laser pointer', 25.0), (10, 'beds', 'double', 11.5), (11, 'beds', 'queen', 23.0), (12, 'beds', 'king', 30.0)");
             this.statement.executeBatch();
+            
         } catch (SQLException e) {
-            System.out.println("Error: Unable to create table Inventory");
+            System.out.println(e);
+            System.out.println("Error: Unable to create table Store");
         }
     }
     
@@ -163,8 +232,8 @@ public class AnimalDB {
         try {
             this.statement = this.conn.createStatement();
             this.checkExisting("ANIMAL_INVENTORY");
-            this.statement.addBatch("CREATE TABLE ANIMAL_INVENTORY (INVENTORYID INT, ANIMALID VARCHAR(100))");
-            this.statement.addBatch("ALTER TABLE ANIMAL_INVENTORY ADD CONSTRAINT inven_fk FOREIGN KEY (INVENTORYID) REFERENCES INVENTORY(INVENTORYID)");
+            this.statement.addBatch("CREATE TABLE ANIMAL_INVENTORY (ITEMID INT, ANIMALID VARCHAR(100))");
+            this.statement.addBatch("ALTER TABLE ANIMAL_INVENTORY ADD CONSTRAINT inven_fk FOREIGN KEY (ITEMID) REFERENCES STORE(ITEMID)");
             this.statement.addBatch("ALTER TABLE ANIMAL_INVENTORY ADD CONSTRAINT name_type_fk FOREIGN KEY (ANIMALID) REFERENCES ANIMAL(ANIMALID)");
             this.statement.executeBatch();
         } catch (SQLException e) {
