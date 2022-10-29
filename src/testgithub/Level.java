@@ -18,7 +18,7 @@ public class Level {
     
     // Default Constructor
     public Level(Animal animal){
-        this.level = 5;
+        this.level = 1;
         this.animal = animal;
     }
     
@@ -82,7 +82,7 @@ public class Level {
             this.level++;
             //update store's user level and add appropriate items depending on new level
             animal.store.updateLevel(this.level);
-            animal.store.addFileItems();
+            //animal.store.addFileItems();
             levelStats();
             animal.animalStats();
         } 

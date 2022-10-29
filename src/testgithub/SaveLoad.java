@@ -191,7 +191,7 @@ public class SaveLoad {
                         this.animal.lvl.setLevel(Integer.valueOf(lineSplit[1]));
                         //update level in store so that items are also updated accordingly
                         this.animal.store.updateLevel(Integer.valueOf(lineSplit[1]));
-                        this.animal.store.addFileItems();
+                        //this.animal.store.addFileItems();
                     }
                     if (lineSplit[0].equals("xp")) {
                         this.animal.lvl.setXp(Integer.valueOf(lineSplit[1]));

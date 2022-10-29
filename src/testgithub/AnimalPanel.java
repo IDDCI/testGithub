@@ -31,7 +31,7 @@ public class AnimalPanel extends JPanel {
     String Name;
 
     // Animal frame components initialization
-    JButton play, feed, sleep, store, exit, instructions;
+    JButton play, feed, sleep, store, exit, instructions, deleteAnimal;
     // variable for when the pet is sleeping  
     String sleeping;
     int sleepCounter;
@@ -52,6 +52,7 @@ public class AnimalPanel extends JPanel {
 
     // Toys
     Image ball, chewToy, frisbee, laserPointer, miceToy, yarn;
+    Image toy;
 
     // Food
     Image basic, deluxe, premium;
@@ -100,7 +101,8 @@ public class AnimalPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Stores animal type and name
                 Type = (String) animalType.getSelectedItem();
-                Name = animalName.getText();
+                // Makes first letter capital and the rest lower case
+                Name = animalName.getText().substring(0,1).toUpperCase() + animalName.getText().substring(1).toLowerCase();
 
                 // Checks if name entered by user is empty or not
                 if (!"".equals(Name.trim()) && Name != null) { // if name not empty
@@ -148,6 +150,7 @@ public class AnimalPanel extends JPanel {
                     add(sleep);
                     add(store);
                     add(instructions);
+                    add(deleteAnimal);
 
                 } else {
                     // If name is empty nothing will be removed or added, just a pop up message to inform the user
@@ -174,7 +177,7 @@ public class AnimalPanel extends JPanel {
                     //randomly generate a toy img from inventory
                     randomIndex = random.nextInt((animal.store.inventory.getToyArray().size()));
                     toyChosen = (String) animal.store.inventory.getToyArray().get(randomIndex);
-                    
+                    System.out.println(toyChosen);
                     if (null != toyChosen)
                         switch (toyChosen) {
                         case "chew toy":
@@ -244,9 +247,40 @@ public class AnimalPanel extends JPanel {
         this.exit.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //animal.animalDB.insertAnimal();
-
-                //animal.diconnectDB();
+                // sets it to true to stop threads and save into database
+                animal.setUserExits(true);
+                if (animal.getAnimalName() != null && animal.getAnimalType() != null && animal.getDeleteAnimal() == false){
+                    //animal.animalDB.insertAnimal();
+                }
+                
+                if (animal.getDeleteAnimal() == true){
+                    //delete everything on the animal
+                    animal.animalDB.deleteAnimal();
+                }
+                
+                // disconnects from the database
+                animal.diconnectDB();
+                
+                // exits program
+                System.exit(0);
+            }
+        }
+        );
+        
+        // Exit button
+        this.deleteAnimal = new JButton("Delete Animal");
+        this.deleteAnimal.setLocation(437, 570);
+        this.deleteAnimal.setSize(125, 25);
+        this.deleteAnimal.addActionListener(
+                new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // sets it to true to stop threads
+                animal.setUserExits(true);
+                
+                // Delete animal
+                animal.animalDB.deleteAnimal();
+                
+                // exits program
                 System.exit(0);
             }
         }
@@ -323,7 +357,8 @@ public class AnimalPanel extends JPanel {
 
             // if you play with animal
             if ("playing".equals(this.playing) && playCounter < 1500) {
-                g.drawImage(toyChosen, 300, 150, this);
+                toy = new ImageIcon("./src/virtualpet/Images/Toys/"+toyChosen+".png").getImage();
+                //g.drawImage(, 300, 150, this);
                 play.setEnabled(false);
                 feed.setEnabled(false);
                 sleep.setEnabled(false);

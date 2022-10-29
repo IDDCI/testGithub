@@ -62,10 +62,11 @@ public abstract class Animal{
         // Set userExit to false until they want to exit
         this.userExits = false;
         
-        animalDB = new AnimalDB();
-        animalDB.createAnimalDB();
-        animalDB.createInventoryBD();
-        animalDB.createAnimalInvenDB();
+        // Connect to Database
+        animalDB = new AnimalDB(animalName, getAnimalType());
+        //animalDB.createAnimalDB();
+        //animalDB.createInventoryBD();
+        //animalDB.createAnimalInvenDB();
     }
     
     public void startingThreads(){
