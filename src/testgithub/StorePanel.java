@@ -47,6 +47,9 @@ public class StorePanel extends JPanel implements ActionListener {
         this.backButton.setSize(100, 25);
         this.add(backButton); 
         
+        //get store items if there are saved user items
+        this.animal.animalDB.retrieveStoreDB();
+        
     }
     
     public void setAnimal(Animal animal) {
@@ -155,8 +158,10 @@ public class StorePanel extends JPanel implements ActionListener {
             new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     try{
+                        //current displayedlist value contains item and price, split line to get just the item
+                        String[] splitLine = ((String)displayedList.getSelectedValue()).split("\t", 2);
                         //check if purchase was successful
-                        if (animal.store.buyItem((String)displayedList.getSelectedValue()))
+                        if (animal.store.buyItem(splitLine[0]))
                         {
                             JOptionPane.showMessageDialog(null, "Purchase Successful!\n"
                             +displayedList.getSelectedValue()+ " added to inventory");
