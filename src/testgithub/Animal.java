@@ -67,8 +67,6 @@ public abstract class Animal{
         animalDB.createAnimalDB();
         animalDB.createStoreDB();
         
-        //get store items
-        animalDB.retrieveStoreDB();
         
         animalDB.createAnimalInvenDB();
     }

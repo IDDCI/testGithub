@@ -1,17 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package testgithub;
 
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
  *
@@ -20,7 +10,7 @@ import java.util.Scanner;
 public class Store {
     //instance variables
     HashMap food, bed, toy;
-    ArrayList allItems;
+    private ArrayList allItems;
     private int level, purchaseInput;
     
     private Scanner scanner;
@@ -37,6 +27,7 @@ public class Store {
         this.bed = new HashMap();
         this.toy = new HashMap();
         
+        //get saved store items
     }
     
     public void setFoods(HashMap food) {
@@ -60,8 +51,10 @@ public class Store {
         //check if item is in food list
         for (Object foodItem: this.food.keySet()) {
             if (foodItem.equals(item)) {
+                
                 if ((Double)this.food.get(foodItem) <= this.money.getAmount())
                 {
+                    this.money.withdrawAmount((Double)this.food.get(foodItem));
                     this.inventory.addFood(item);
                     return true;
                 }
@@ -73,6 +66,7 @@ public class Store {
             if (toyItem.equals(item)) {
                 if ((Double)this.toy.get(toyItem) <= this.money.getAmount())
                 {
+                    this.money.withdrawAmount((Double)this.toy.get(toyItem));
                     this.inventory.addToy(item);
                     return true;
                 }
@@ -84,6 +78,7 @@ public class Store {
             if (bedItem.equals(item)) {
                 if ((Double)this.bed.get(bedItem) <= this.money.getAmount())
                 {
+                    this.money.withdrawAmount((Double)this.bed.get(bedItem));
                     this.inventory.addBed(item);
                     return true;
                 }
@@ -140,7 +135,7 @@ public class Store {
         //traverse and add toy to string array
         for (Object toyItem: this.toy.keySet())
         {
-            toys[i] = toyItem.toString();
+            toys[i] = toyItem.toString() + "\t$" +this.toy.get(toyItem);
             i++;
         }
         
@@ -154,7 +149,7 @@ public class Store {
         //traverse and add toy to string array
         for (Object bedItem: this.bed.keySet())
         {
-            beds[i] = bedItem.toString();
+            beds[i] = bedItem.toString() + "\t$" +this.bed.get(bedItem);
             i++;
         }
         
