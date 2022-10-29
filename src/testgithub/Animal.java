@@ -24,6 +24,10 @@ public abstract class Animal{
     private int sleepingCap;
     private String animalType;
     
+    private boolean play;
+    private boolean feed;
+    private boolean sleep;
+    
     //to determine whether animal needs to be erased
     private boolean deleteAnimal;
     
@@ -309,5 +313,47 @@ public abstract class Animal{
 
     public void setUserExits(boolean userExits) {
         this.userExits = userExits;
+    }
+
+    /**
+     * @return the play
+     */
+    public boolean isPlay() {
+        return play;
+    }
+
+    /**
+     * @param play the play to set
+     */
+    public void setPlay(boolean play) {
+        this.play = play;
+    }
+
+    /**
+     * @return the feed
+     */
+    public boolean isFeed() {
+        return feed;
+    }
+
+    /**
+     * @param feed the feed to set
+     */
+    public void setFeed(boolean feed) {
+        this.feed = feed;
+    }
+
+    /**
+     * @return the sleep
+     */
+    public boolean isSleep() {
+        return sleep;
+    }
+
+    /**
+     * @param sleep the sleep to set
+     */
+    public void setSleep(boolean sleep) {
+        this.sleep = sleep;
     }
 }

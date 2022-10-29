@@ -42,6 +42,9 @@ public class AnimalPanel extends JPanel {
     String toyChosen;
     Random random = new Random();
     int randomIndex;
+    // variable for when the pet is eating 
+    String feeding;
+    int feedCounter;
 
     // Objects to connect to other classes
     Animal animal;
@@ -50,13 +53,10 @@ public class AnimalPanel extends JPanel {
     // Image initialization
     // Dog and Cat
     Image diedDC, happyDC, sleepyDC, wantDC;
-
     // Toys
-    Image ball, chewToy, frisbee, laserPointer, miceToy, yarn;
     Image toy;
-
     // Food
-    Image basic, deluxe, premium;
+    Image food;
 
     public AnimalPanel() {
 
@@ -144,19 +144,6 @@ public class AnimalPanel extends JPanel {
                     // check if animal already exist and if they do override current stats
                     animal.animalDB.retrieveAnimal(Name, Type);
 
-                    // Load in toy images
-                    ball = new ImageIcon("./src/virtualpet/Images/Toys/Ball.png").getImage();
-                    chewToy = new ImageIcon("./src/virtualpet/Images/Toys/ChewToy.png").getImage();
-                    frisbee = new ImageIcon("./src/virtualpet/Images/Toys/frisbee.png").getImage();
-                    laserPointer = new ImageIcon("./src/virtualpet/Images/Toys/laserPointer.png").getImage();
-                    miceToy = new ImageIcon("./src/virtualpet/Images/Toys/miceToy.png").getImage();
-                    yarn = new ImageIcon("./src/virtualpet/Images/Toys/yarn.png").getImage();
-
-                    // Load in food images
-                    basic = new ImageIcon("./src/virtualpet/Images/Food/Basic.png").getImage();
-                    deluxe = new ImageIcon("./src/virtualpet/Images/Food/Deluxe.png").getImage();
-                    premium = new ImageIcon("./src/virtualpet/Images/Food/Premium.png").getImage();
-
                     // Adds new components
                     add(play);
                     add(feed);
@@ -181,35 +168,19 @@ public class AnimalPanel extends JPanel {
         this.play.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                playing = "playing";
-                playCounter = 0;
-
-                //check if the list is empty, if it is empty then the pet has no toys to play with
-                if (!animal.store.inventory.getToyArray().isEmpty()) {
-
-                    //randomly generate a toy img from inventory
-                    randomIndex = random.nextInt((animal.store.inventory.getToyArray().size()));
-                    toyChosen = (String) animal.store.inventory.getToyArray().get(randomIndex);
-                    System.out.println(toyChosen);
-                    if (null != toyChosen) {
-                        switch (toyChosen) {
-                            case "chew toy":
-                                toyChosen = "chewToy";
-                                break;
-                            case "laser pointer":
-                                toyChosen = "laserPointer";
-                                break;
-                            case "mice toy":
-                                toyChosen = "miceToy";
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                }
-
                 animal.play();
+
+                if (animal.isPlay()) {
+                    if (!animal.store.inventory.toy.isEmpty()) {
+                        Random random = new Random();
+                        int randomIndex = random.nextInt(animal.store.inventory.toy.size());
+
+                        String toyItem = (String) animal.store.inventory.toy.get(randomIndex);
+                        toy = new ImageIcon("./src/virtualpet/Images/Food/" + toyItem + ".png").getImage();
+                    }
+                    playing = "playing";
+                    playCounter = 0;
+                }
 
             }
         }
@@ -223,6 +194,18 @@ public class AnimalPanel extends JPanel {
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 animal.feed();
+
+                if (animal.isFeed()) {
+                    if (!animal.store.inventory.food.isEmpty()) {
+                        Random random = new Random();
+                        int randomIndex = random.nextInt(animal.store.inventory.food.size());
+
+                        String foodItem = (String) animal.store.inventory.food.get(randomIndex);
+                        food = new ImageIcon("./src/virtualpet/Images/Food/" + foodItem + ".png").getImage();
+                    }
+                    feeding = "feeding";
+                    feedCounter = 0;
+                }
             }
         }
         );
@@ -234,9 +217,11 @@ public class AnimalPanel extends JPanel {
         this.sleep.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                sleeping = "sleeping";
-                sleepCounter = 0;
                 animal.sleeping();
+                if (animal.isSleep() == true) {
+                    sleeping = "sleeping";
+                    sleepCounter = 0;
+                }
 
             }
         }
@@ -366,7 +351,7 @@ public class AnimalPanel extends JPanel {
                 sleepCounter++;
             }
 
-            if (sleepCounter == 1500) {
+            if (sleepCounter == 1500 && "sleeping".equals(this.sleeping)) {
                 sleeping = null;
                 play.setEnabled(true);
                 feed.setEnabled(true);
@@ -376,8 +361,8 @@ public class AnimalPanel extends JPanel {
 
             // if you play with animal
             if ("playing".equals(this.playing) && playCounter < 1500) {
-                toy = new ImageIcon("./src/virtualpet/Images/Toys/" + toyChosen + ".png").getImage();
-                //g.drawImage(, 300, 150, this);
+                if (toy != null)
+                    g.drawImage(toy, 400, 150, this);
                 play.setEnabled(false);
                 feed.setEnabled(false);
                 sleep.setEnabled(false);
@@ -385,8 +370,28 @@ public class AnimalPanel extends JPanel {
                 playCounter++;
             }
 
-            if (playCounter == 1500) {
+            if (playCounter == 1500 && "playing".equals(this.playing)) {
                 playing = null;
+                play.setEnabled(true);
+                feed.setEnabled(true);
+                sleep.setEnabled(true);
+                store.setEnabled(true);
+            }
+
+            // if animal is eating
+            if ("feeding".equals(this.feeding) && feedCounter < 1500) {
+                if (food != null) {
+                    g.drawImage(food, 400, 150, this);
+                }
+                play.setEnabled(false);
+                feed.setEnabled(false);
+                sleep.setEnabled(false);
+                store.setEnabled(false);
+                playCounter++;
+            }
+
+            if (feedCounter == 1500 && "feeding".equals(this.feeding)) {
+                feeding = null;
                 play.setEnabled(true);
                 feed.setEnabled(true);
                 sleep.setEnabled(true);
@@ -417,20 +422,15 @@ public class AnimalPanel extends JPanel {
             g.drawString("Health: " + animal.getHealth(), 260, 440);
             g.drawString("Hunger: " + animal.getHunger(), 260, 455);
             g.drawString("Sleep: " + animal.getSleep(), 260, 470);
-
         }
         repaint();
-
     }
-
     // get storePanel update method to update money
     private void updateStore() {
         this.storePanel.update();
     }
-
     // get store button to put in main frame to be able to access store
     public JButton getStoreButton() {
         return this.store;
     }
-
 }
