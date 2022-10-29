@@ -142,7 +142,7 @@ public class AnimalPanel extends JPanel {
                     }
 
                     // check if animal already exist and if they do override current stats
-                    animal.animalDB.retrieveAnimal();
+                    animal.animalDB.retrieveAnimal(Name, Type);
 
                     // Load in toy images
                     ball = new ImageIcon("./src/virtualpet/Images/Toys/Ball.png").getImage();

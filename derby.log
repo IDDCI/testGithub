@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Oct 30 10:37:00 NZDT 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-25ad-39b2-0000071ab018 
+Sun Oct 30 11:15:58 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-25d0-e6df-000007529508 
 on database directory /Users/jennylim/testinghub1/testGithub/AnimalDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42a57993 
 Loaded from file:/Users/jennylim/testinghub1/testGithub/lib%20/derby.jar
 java.vendor=Oracle Corporation
