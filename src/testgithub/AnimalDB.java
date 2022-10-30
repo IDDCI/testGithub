@@ -146,23 +146,27 @@ public class AnimalDB {
         ResultSet rs = null;
         try {
             this.statement = this.conn.createStatement();
-            String sqlQuery = "SELECT STORE.ITEM, STORE.ITEMTYPE FROM STORE JOIN ANIMAL_INVENTORY"
-                    + " ON STORE.ITEMID = ANIMAL_INVENTORY.ITEMID JOIN ANIMAL ON ANIMAL.ANIMALID = ANIMAL_INVENTORY.ANIMALID";
+            String sqlQuery = "SELECT ITEMID FROM ANIMAL_INVENTORY WHERE ANIMALID='"+key+"'";
             rs = statement.executeQuery(sqlQuery);
             while (rs.next()) {
-                System.out.println(rs.getString("ITEM") + " " + rs.getString("ITEMTYPE") + " " + rs.getString("ANIMALID"));
-                //add items to animal's inventory
-                //add to bed
-                if (rs.getString("ITEMTYPE").equals("beds")) {
-                    animal.store.inventory.addBed(rs.getString("ITEM"));
-                }
-                //add to food
-                if (rs.getString("ITEMTYPE").equals("foods")) {
-                    animal.store.inventory.addFood(rs.getString("ITEM"));
-                }
-                //add to toy
-                if (rs.getString("ITEMTYPE").equals("toys")) {
-                    animal.store.inventory.addToy(rs.getString("ITEM"));
+                System.out.println(rs.getInt("ITEMID"));
+                String sqlQueryGetItem = "SELECT ITEM, ITEMTYPE FROM STORE WHERE ITEMID="+rs.getInt("ITEMID");
+                ResultSet getItemrs = statement.executeQuery(sqlQueryGetItem);
+                
+                if (getItemrs.next()) {
+                    //add items to animal's inventory
+                    //add to bed
+                    if (getItemrs.getString("ITEMTYPE").equals("beds")) {
+                        animal.store.inventory.addBed(getItemrs.getString("ITEM"));
+                    }
+                    //add to food
+                    if (getItemrs.getString("ITEMTYPE").equals("foods")) {
+                        animal.store.inventory.addFood(getItemrs.getString("ITEM"));
+                    }
+                    //add to toy
+                    if (getItemrs.getString("ITEMTYPE").equals("toys")) {
+                        animal.store.inventory.addToy(getItemrs.getString("ITEM"));
+                    }
                 }
 
             }

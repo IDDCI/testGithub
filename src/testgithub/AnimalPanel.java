@@ -197,8 +197,8 @@ public class AnimalPanel extends JPanel {
                         String toyItem = (String) animal.store.inventory.toy.get(randomIndex);
                         System.out.println(randomIndex);
                         System.out.println(toyItem);
-                        toy = new ImageIcon("./src/virtualpet/Images/Food/" + toyItem.trim() + ".png").getImage();
-                        
+                        toy = new ImageIcon("./src/virtualpet/Images/Toy/" + toyItem.replaceAll("\\s+", "") + ".png").getImage();
+                        System.out.println(toyItem.replaceAll("\\s+", ""));
                     }
                     playing = "playing";
                     playCounter = 0;
