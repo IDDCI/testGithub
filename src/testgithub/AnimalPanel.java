@@ -148,11 +148,12 @@ public class AnimalPanel extends JPanel {
                         animal = new Cat(Name);
                         happyDC = new ImageIcon("./src/virtualpet/Images/Cat/Happy.png").getImage();
                         sleepyDC = new ImageIcon("./src/virtualpet/Images/Cat/Sleepy.png").getImage();
-                        wantDC = new ImageIcon("./src/virtualpet/Images/Cat/want.png").getImage();
+                        wantDC = new ImageIcon("./src/virtualpet/Images/Cat/Want.png").getImage();
                         diedDC = new ImageIcon("./src/virtualpet/Images/Cat/Died.png").getImage();
                     }
 
-                    if (animal.animalDB.checkAnimal(Name, Type)) {
+                    
+                    if (animal.animalDB.checkAnimal(Name, Type)) { // check if animal is in database if so as user if they want to override or not
                         loadOrDelete = JOptionPane.showConfirmDialog(null, "There has been a save file found in database, do you want to load it in?", "WARNING", JOptionPane.YES_NO_OPTION);
                         if (loadOrDelete == JOptionPane.YES_OPTION) {
                             // check if animal already exist and if they do override current stats
@@ -169,7 +170,7 @@ public class AnimalPanel extends JPanel {
                     add(deleteAnimal);
 
                 } else {
-                    // If name is empty nothing will be removed or added, just a pop up message to inform the user
+                    // If name is empty or is filled with special characters nothing will be removed or added, just a pop up message to inform the user
                     JOptionPane.showMessageDialog(null, "Name field is invalid. May have special characters or is blank. Please try again :)");
                 }
             }
@@ -184,22 +185,23 @@ public class AnimalPanel extends JPanel {
         this.play.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // access play function from object
                 animal.play();
                 
-                
-                if (animal.isPlay()) {
+                if (animal.isPlay()) { // if the play function is successful
                     
-                    System.out.println(animal.store.inventory.toy.isEmpty());
-                    if (!animal.store.inventory.toy.isEmpty()) {
+                    if (!animal.store.inventory.toy.isEmpty()) { //check if the pet has toys
                         Random random = new Random();
+                        
+                        // use a randomized index to get a random toy from the array list and use it for the image when they play
                         int randomIndex = random.nextInt(animal.store.inventory.toy.size());
-
                         String toyItem = (String) animal.store.inventory.toy.get(randomIndex);
                         System.out.println(randomIndex);
                         System.out.println(toyItem);
-                        toy = new ImageIcon("./src/virtualpet/Images/Toy/" + toyItem.replaceAll("\\s+", "") + ".png").getImage();
+                        toy = new ImageIcon("./src/virtualpet/Images/Toys/" + toyItem.replaceAll("\\s+", "") + ".png").getImage();
                         System.out.println(toyItem.replaceAll("\\s+", ""));
                     }
+                    // set these variables for the paint function to display a specific image
                     playing = "playing";
                     playCounter = 0;
                 }
@@ -215,17 +217,20 @@ public class AnimalPanel extends JPanel {
         this.feed.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // access feed function from object
                 animal.feed();
 
-                if (animal.isFeed()) {
+                if (animal.isFeed()) { // check if feed function was successful
                     
-                    if (!animal.store.inventory.food.isEmpty()) {
+                    if (!animal.store.inventory.food.isEmpty()) { //check if pet has food
                         Random random = new Random();
+                        
+                        // use randomizer to get random food from arraylist and display
                         int randomIndex = random.nextInt(animal.store.inventory.food.size());
-
                         String foodItem = (String) animal.store.inventory.food.get(randomIndex);
                         food = new ImageIcon("./src/virtualpet/Images/Food/" + foodItem + ".png").getImage();
                     }
+                    // set thes variables for paint function to be able to display image
                     feeding = "feeding";
                     feedCounter = 0;
                 }
@@ -240,8 +245,10 @@ public class AnimalPanel extends JPanel {
         this.sleep.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // access sleep function from animal object
                 animal.sleeping();
-                if (animal.isSleep() == true) {
+                if (animal.isSleep()) { // if sleep function was successful
+                    // set thes variables for pain function to be able to display image
                     sleeping = "sleeping";
                     sleepCounter = 0;
                 }
@@ -263,7 +270,7 @@ public class AnimalPanel extends JPanel {
         this.exit.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!"".equals(Name) && Type != null && !nameCheck) {
+                if (!"".equals(Name) && Type != null && !nameCheck) { // for when user has entered an acceptable name and type
                     // sets it to true to stop threads and save into database
                     animal.setUserExits(true);
                     if (animal.getAnimalName() != null && animal.getAnimalType() != null && animal.getDeleteAnimal() == false ) {
@@ -320,6 +327,7 @@ public class AnimalPanel extends JPanel {
         this.instructions.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // display instructions of game
                 JOptionPane.showMessageDialog(null, "Ways to take care of pet :).\n- Playing increases happiness, but decreases hunger and sleep\n"
                         + "- Feeding increases happiness and hunger\n"
                         + "- Sleeping increases health and sleep\n"
@@ -444,6 +452,7 @@ public class AnimalPanel extends JPanel {
                 g.drawString("Please exit the game and try again.", 400, 455);
             }
 
+            // Display animal stats
             g.drawString(animal.toString(), 260, 410);
             g.drawString("Happiness: " + animal.getHappiness(), 260, 425);
             g.drawString("Health: " + animal.getHealth(), 260, 440);

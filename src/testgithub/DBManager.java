@@ -47,9 +47,6 @@ public final class DBManager {
                 System.out.println("Error with connecting to URL: "+URL);
             }
         }
-        
-        
-        
     }
 
     public void closeConnections() {
