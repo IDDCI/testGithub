@@ -24,7 +24,7 @@ import javax.swing.ScrollPaneConstants;
 public class StorePanel extends JPanel implements ActionListener {
     //instance variables
     JButton buyButton, backButton, filterButton;
-    JLabel storeTitle, displayCoins, filterLabel;
+    JLabel storeTitle, displayCoins, filterLabel, inventoryTitle;
     JComboBox filterBox;
     JScrollPane itemPane, inventoryPane;
     String[] foodList, bedList, toyList, allItemsList, inventoryListString;
@@ -44,9 +44,6 @@ public class StorePanel extends JPanel implements ActionListener {
         this.backButton.setLocation(808, 560);
         this.backButton.setSize(100, 25);
         this.add(backButton); 
-        
-       
-        
     }
     
     public void setAnimal(Animal animal) {
@@ -82,7 +79,7 @@ public class StorePanel extends JPanel implements ActionListener {
         this.toyList = animal.store.getToys();
         
             //adding to item list
-        this.displayedList = new JList(this.animal.store.getAllItemsString());
+        this.displayedList = new JList(allItemsList);
             //adding jlist to scrollpane
         this.itemPane = new JScrollPane(this.displayedList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -91,15 +88,25 @@ public class StorePanel extends JPanel implements ActionListener {
         this.itemPane.setVisible(true);
         this.add(itemPane);
         
+        //add inventory title
+        this.inventoryTitle = new JLabel();
+        this.inventoryTitle.setText("Pet's Inventory:");
+        this.inventoryTitle.setLocation(100, 300);
+        this.inventoryTitle.setSize(170,100);
+        this.inventoryTitle.setFont(new Font("Serif", Font.PLAIN, 20));
+        this.inventoryTitle.setVisible(true);
+        this.add(inventoryTitle);
+        
         //adding to inventory list
-        this.displayedList = new JList(this.animal.store.inventory.getAllItemsString());
+        this.inventoryListString = animal.store.inventory.getAllItemsString();
+        this.inventoryList = new JList(inventoryListString);
             //adding inventory list to scrollpane
-        this.itemPane = new JScrollPane(this.displayedList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        this.inventoryPane = new JScrollPane(this.inventoryList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.itemPane.setLocation(480, 100);
-        this.itemPane.setSize(420,420);
-        this.itemPane.setVisible(true);
-        this.add(itemPane);
+        this.inventoryPane.setLocation(100, 370);
+        this.inventoryPane.setSize(350,150);
+        this.inventoryPane.setVisible(true);
+        this.add(inventoryPane);
         
         //add filter label
         this.filterLabel = new JLabel();
@@ -132,13 +139,9 @@ public class StorePanel extends JPanel implements ActionListener {
                         
                         if (filterOption.equals("All")) {
                             displayedList.setListData(allItemsList);
-                            itemPane.setViewportView(displayedList);
-                            
                         }
                         if (filterOption.equals("Foods")) {
                             displayedList.setListData(foodList);
-                            itemPane.setViewportView(displayedList);
-                            
                         }
                         if (filterOption.equals("Toys")) {
                             displayedList.setListData(toyList);
@@ -169,6 +172,7 @@ public class StorePanel extends JPanel implements ActionListener {
                         {
                             JOptionPane.showMessageDialog(null, "Purchase Successful!\n"
                             +displayedList.getSelectedValue()+ " added to inventory");
+                            
                         }
                         //otherwise display message saying they do not have enough money
                         else
@@ -178,6 +182,7 @@ public class StorePanel extends JPanel implements ActionListener {
                     catch(NullPointerException exception) {
                         JOptionPane.showMessageDialog(null, "You haven't selected an item!");
                     }
+                    inventoryList.setListData(animal.store.inventory.getAllItemsString());
                     //update coins on screen
                     update();
                 }

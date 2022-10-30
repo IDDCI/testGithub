@@ -64,12 +64,14 @@ public class Inventory {
         return this.allItems;
     }
     
-    public static void main(String[] args) {
-        Inventory test = new Inventory();
+    public String[] getAllItemsString() {
+        String[] items = new String[20];
         
-        test.addToy("bean");
-        for (int i = 0; i < test.toy.size(); i++){
-            System.out.println(test.toy.get(i));
+        for (int i=0; i<this.allItems.size(); i++) {
+            items[i] = (String)this.allItems.get(i);
         }
+        
+        return items;
     }
+    
 }
