@@ -55,15 +55,15 @@ public class AnimalDB {
         try {
             this.statement = this.conn.createStatement();
             ResultSet rs = null;
-            String sqlQuery = "SELECT ITEMID, TYPE, ITEM, PRICE FROM STORE WHERE ANIMALID='" + key + "'";
+            String sqlQuery = "SELECT ITEMID, ITEMTYPE, ITEM FROM STORE WHERE ITEM='" + item + "'";
             rs = statement.executeQuery(sqlQuery);
-
-            while (rs.next()) {
-                if (rs.getString("ITEM").equals(item)) {
-                    this.statement.addBatch("INSERT INTO ANIMAL_INVENTORY VALUES (" + rs.getFloat("ITEMID") + ", " + this.key + ")");
-                    this.statement.executeBatch();
-                }
+            if (rs.next())
+            {
+                System.out.println(rs.getString("ITEM") + " " + rs.getInt("ITEMID"));
+                this.statement.addBatch("INSERT INTO ANIMAL_INVENTORY VALUES (" + rs.getInt("ITEMID") + ", '" + this.key + "')");
+                this.statement.executeBatch();
             }
+            
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -75,11 +75,12 @@ public class AnimalDB {
     public void deleteAnimal() {
         try {
             this.statement = this.conn.createStatement();
-            this.statement.addBatch("DELETE FROM ANIMAL WHERE ANIMALID='" + key + "'");
             this.statement.addBatch("DELETE FROM ANIMAL_INVENTORY WHERE ANIMALID='" + key + "'");
+            this.statement.addBatch("DELETE FROM ANIMAL WHERE ANIMALID='" + key + "'");
             this.statement.executeBatch();
             System.out.println("Animal Deleted");
         } catch (SQLException e) {
+            System.out.println(e);
             System.out.println("Error: Unable to delete animal");
         }
     }
@@ -145,26 +146,28 @@ public class AnimalDB {
         ResultSet rs = null;
         try {
             this.statement = this.conn.createStatement();
-            String sqlQuery = "SELECT ITEM, TYPE, PRICE FROM STORE S, ANIMAL_INVENTORY A_I, ANIMAL A"
-                    + " WHERE A_I.ITEMID = S.ITEMID AND A_I.ANIMALID = A.ANIMALID";
+            String sqlQuery = "SELECT STORE.ITEM, STORE.ITEMTYPE FROM STORE JOIN ANIMAL_INVENTORY"
+                    + " ON STORE.ITEMID = ANIMAL_INVENTORY.ITEMID JOIN ANIMAL ON ANIMAL.ANIMALID = ANIMAL_INVENTORY.ANIMALID";
             rs = statement.executeQuery(sqlQuery);
             while (rs.next()) {
+                System.out.println(rs.getString("ITEM") + " " + rs.getString("ITEMTYPE") + " " + rs.getString("ANIMALID"));
                 //add items to animal's inventory
                 //add to bed
-                if (rs.getString("TYPE").equals("BED")) {
-                    animal.store.inventory.bed.add(rs.getString("ITEM"));
+                if (rs.getString("ITEMTYPE").equals("beds")) {
+                    animal.store.inventory.addBed(rs.getString("ITEM"));
                 }
                 //add to food
-                if (rs.getString("TYPE").equals("FOOD")) {
-                    animal.store.inventory.food.add(rs.getString("ITEM"));
+                if (rs.getString("ITEMTYPE").equals("foods")) {
+                    animal.store.inventory.addFood(rs.getString("ITEM"));
                 }
                 //add to toy
-                if (rs.getString("TYPE").equals("TOY")) {
-                    animal.store.inventory.toy.add(rs.getString("ITEM"));
+                if (rs.getString("ITEMTYPE").equals("toys")) {
+                    animal.store.inventory.addToy(rs.getString("ITEM"));
                 }
 
             }
         } catch (SQLException e) {
+            System.out.println(e);
             System.out.println("No items to add to inventory");
         }
     }
@@ -175,21 +178,21 @@ public class AnimalDB {
             this.statement = this.conn.createStatement();
             ResultSet rs = null;
 
-            String sqlQuery = "SELECT ITEM, TYPE, PRICE FROM STORE";
+            String sqlQuery = "SELECT ITEM, ITEMTYPE, PRICE FROM STORE";
             rs = statement.executeQuery(sqlQuery);
             while (rs.next()) {
                 //add items in hashmaps of the store
                 //add to bed
-                if (rs.getString("TYPE").toUpperCase().equals("BEDS")) {
+                if (rs.getString("ITEMTYPE").toUpperCase().equals("BEDS")) {
                     animal.store.bed.put(rs.getString("ITEM"), rs.getDouble("PRICE"));
 
                 }
                 //add to food
-                if (rs.getString("TYPE").toUpperCase().equals("FOODS")) {
+                if (rs.getString("ITEMTYPE").toUpperCase().equals("FOODS")) {
                     animal.store.food.put(rs.getString("ITEM"), rs.getDouble("PRICE"));
                 }
                 //add to toy
-                if (rs.getString("TYPE").toUpperCase().equals("TOYS")) {
+                if (rs.getString("ITEMTYPE").toUpperCase().equals("TOYS")) {
                     animal.store.toy.put(rs.getString("ITEM"), rs.getDouble("PRICE"));
                 }
 
@@ -221,7 +224,7 @@ public class AnimalDB {
     public void createStoreDB() {
         try {
             this.statement = this.conn.createStatement();
-            this.statement.addBatch("CREATE TABLE STORE (ITEMID INT NOT NULL PRIMARY KEY, TYPE VARCHAR(50),  ITEM VARCHAR(50), PRICE FLOAT)");
+            this.statement.addBatch("CREATE TABLE STORE (ITEMID INT NOT NULL PRIMARY KEY, ITEMTYPE VARCHAR(50),  ITEM VARCHAR(50), PRICE FLOAT)");
             this.statement.addBatch("INSERT INTO STORE VALUES(1, 'foods', 'basic', 10.5), (2, 'foods', 'deluxe', 14.0), (3, 'foods', 'premium', 20.0)"
                     + ", (4, 'toys', 'ball', 7.5), (5, 'toys', 'yarn', 8.0), (6, 'toys', 'chew toy', 11.0), (7, 'toys', 'mice toy', 10.5), (8, 'toys', 'frisbee', 20.0),"
                     + "(9, 'toys', 'laser pointer', 25.0), (10, 'beds', 'double', 11.5), (11, 'beds', 'queen', 23.0), (12, 'beds', 'king', 30.0)");

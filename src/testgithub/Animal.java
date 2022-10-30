@@ -73,8 +73,8 @@ public abstract class Animal{
         
          //get store items if there are saved user items
         animalDB.retrieveStoreDB();
-        
         animalDB.createAnimalInvenDB();
+        animalDB.retrieveAnimalInvenDB();
     }
     
     public void startingThreads(){
