@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +25,10 @@ import javax.swing.border.LineBorder;
  */
 public class AnimalPanel extends JPanel {
     // variable initialization
+    
+    // use string to check for special characters
+    private static final String SPECIAL_CHARACTERS = "[\\\\!\"#$%&()*+,./:;<=>?@\\[\\]^_{|}~]+";
+    private boolean nameCheck;
 
     // Menu initializations
     protected JLabel title, typeQ, nameQ;
@@ -113,9 +119,14 @@ public class AnimalPanel extends JPanel {
                 Type = (String) animalType.getSelectedItem();
                 // Makes first letter capital and the rest lower case
                 Name = animalName.getText().substring(0, 1).toUpperCase() + animalName.getText().substring(1).toLowerCase();
+                // Check for special characters
+                Pattern p = Pattern.compile(SPECIAL_CHARACTERS);
+                Matcher m = p.matcher(Name);
+                
+                nameCheck = m.find();
 
                 // Checks if name entered by user is empty or not
-                if (!"".equals(Name.trim()) && Name != null) { // if name not empty
+                if (!"".equals(Name.trim()) && Name != null && !nameCheck) { // if name not empty
 
                     // Removes old components
                     remove(typeQ);
@@ -159,7 +170,7 @@ public class AnimalPanel extends JPanel {
 
                 } else {
                     // If name is empty nothing will be removed or added, just a pop up message to inform the user
-                    JOptionPane.showMessageDialog(null, "Name field is empty please enter\na name for the animal");
+                    JOptionPane.showMessageDialog(null, "Name field is invalid. May have special characters or is blank. Please try again :)");
                 }
             }
         }
@@ -252,10 +263,10 @@ public class AnimalPanel extends JPanel {
         this.exit.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!"".equals(Name) && Type != null) {
+                if (!"".equals(Name) && Type != null && !nameCheck) {
                     // sets it to true to stop threads and save into database
                     animal.setUserExits(true);
-                    if (animal.getAnimalName() != null && animal.getAnimalType() != null && animal.getDeleteAnimal() == false) {
+                    if (animal.getAnimalName() != null && animal.getAnimalType() != null && animal.getDeleteAnimal() == false ) {
                         // Delete prevoiusly saved data
                         animal.animalDB.deleteAnimal();
                         // Save data
@@ -341,7 +352,7 @@ public class AnimalPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (Type != null && !"".equals(Name)) {
+        if (Type != null && !"".equals(Name) && !nameCheck) {
             // Draws default Animal (either Dog or Cat)
             g.drawImage(happyDC, 300, 150, this);
             // if happiness, health or hunger is low this show want face
