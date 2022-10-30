@@ -10,7 +10,6 @@ package testgithub;
  */
 public class Main {
     public static void main(final String[] args) {
-        VPFrame vpGUI = new VPFrame();
-        
+        VPFrame vpGUI = new VPFrame();    
     }
 }

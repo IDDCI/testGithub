@@ -24,39 +24,38 @@ public class AnimalPanel extends JPanel {
     // variable initialization
 
     // Menu initializations
-    JLabel title, typeQ, nameQ;
-    JTextField animalName;
-    JComboBox animalType;
-    JButton submit;
-    String Type = null;
-    String Name;
+    protected JLabel title, typeQ, nameQ;
+    protected JTextField animalName;
+    protected JComboBox animalType;
+    protected JButton submit;
+    protected String Type = null;
+    protected String Name;
+    protected int loadOrDelete;
 
     // Animal frame components initialization
-    JButton play, feed, sleep, store, exit, instructions, deleteAnimal;
+    protected JButton play, feed, sleep, store, exit, instructions, deleteAnimal;
     // variable for when the pet is sleeping  
-    String sleeping;
-    int sleepCounter;
+    protected String sleeping;
+    protected int sleepCounter;
     // variable for when the pet is playing
-    String playing;
-    int playCounter;
-    String toyChosen;
-    Random random = new Random();
-    int randomIndex;
+    protected String playing;
+    protected int playCounter;
+    protected String toyChosen;
     // variable for when the pet is eating 
-    String feeding;
-    int feedCounter;
+    protected String feeding;
+    protected int feedCounter;
 
     // Objects to connect to other classes
-    Animal animal;
-    StorePanel storePanel;
+    protected Animal animal;
+    protected StorePanel storePanel;
 
     // Image initialization
     // Dog and Cat
-    Image diedDC, happyDC, sleepyDC, wantDC;
+    protected Image diedDC, happyDC, sleepyDC, wantDC;
     // Toys
-    Image toy;
+    protected Image toy;
     // Food
-    Image food;
+    protected Image food;
 
     public AnimalPanel() {
 
@@ -141,8 +140,13 @@ public class AnimalPanel extends JPanel {
                         diedDC = new ImageIcon("./src/virtualpet/Images/Cat/Died.png").getImage();
                     }
 
-                    // check if animal already exist and if they do override current stats
-                    animal.animalDB.retrieveAnimal(Name, Type);
+                    if (animal.animalDB.checkAnimal(Name, Type)) {
+                        loadOrDelete = JOptionPane.showConfirmDialog(null, "There has been a save file found in database, do you want to load it in?", "WARNING", JOptionPane.YES_NO_OPTION);
+                        if (loadOrDelete == JOptionPane.YES_OPTION) {
+                            // check if animal already exist and if they do override current stats
+                            animal.animalDB.retrieveAnimal(Name, Type);
+                        }
+                    }
 
                     // Adds new components
                     add(play);
@@ -361,8 +365,9 @@ public class AnimalPanel extends JPanel {
 
             // if you play with animal
             if ("playing".equals(this.playing) && playCounter < 1500) {
-                if (toy != null)
+                if (toy != null) {
                     g.drawImage(toy, 400, 150, this);
+                }
                 play.setEnabled(false);
                 feed.setEnabled(false);
                 sleep.setEnabled(false);
@@ -425,10 +430,12 @@ public class AnimalPanel extends JPanel {
         }
         repaint();
     }
+
     // get storePanel update method to update money
     private void updateStore() {
         this.storePanel.update();
     }
+
     // get store button to put in main frame to be able to access store
     public JButton getStoreButton() {
         return this.store;

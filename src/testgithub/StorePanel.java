@@ -47,8 +47,7 @@ public class StorePanel extends JPanel implements ActionListener {
         this.backButton.setSize(100, 25);
         this.add(backButton); 
         
-        //get store items if there are saved user items
-        this.animal.animalDB.retrieveStoreDB();
+       
         
     }
     

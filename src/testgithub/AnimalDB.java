@@ -82,6 +82,27 @@ public class AnimalDB {
             System.out.println("Error: Unable to delete animal");
         }
     }
+    
+    // Check table for saved data
+    public boolean checkAnimal(String name, String type) {
+        ResultSet rs = null;
+        boolean existing = false;
+        try {
+            this.statement = this.conn.createStatement();
+            String sqlQuery = "SELECT NAME, TYPE FROM ANIMAL WHERE ANIMALID='" + key + "'";
+            rs = statement.executeQuery(sqlQuery);
+            while (rs.next()) {
+                if ((rs.getString("NAME").equals(name)) && (rs.getString("TYPE").equals(type))) {
+                    existing = true;
+                }
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error with checking for animal");
+        }
+        
+        return existing;
+    }
 
     // Check table for saved data
     public void retrieveAnimal(String name, String type) {
@@ -107,8 +128,6 @@ public class AnimalDB {
                 animal.setSleepCap(rs.getInt("SLEEPCAP"));
                 animal.store.money.setAmount(rs.getDouble("MONEY"));
                 
-                System.out.println("DB: "+rs.getString("NAME"));
-                System.out.println("User: "+name);
                 if ((rs.getString("NAME").equals(name)) && (rs.getString("TYPE").equals(type))) {
                     System.out.println("Animal save file has been found");
                     JOptionPane.showMessageDialog(null, "Animal save file has been found");
@@ -116,7 +135,7 @@ public class AnimalDB {
             }
             
         } catch (SQLException e) {
-            System.out.println("No animal of that ID found. New pet being created");
+            System.out.println("Error with retrieving data from Animal table");
         }
     }
 
