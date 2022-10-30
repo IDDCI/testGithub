@@ -146,34 +146,32 @@ public class AnimalDB {
         ResultSet rs = null;
         try {
             this.statement = this.conn.createStatement();
-            String sqlQuery = "SELECT ITEMID FROM ANIMAL_INVENTORY WHERE ANIMALID='"+key+"'";
+            String sqlQuery = "SELECT ANIMAL_INVENTORY.ANIMALID, ANIMAL_INVENTORY.ITEMID, STORE.ITEM, STORE.ITEMTYPE FROM ANIMAL_INVENTORY, STORE WHERE ANIMAL_INVENTORY.ITEMID = STORE.ITEMID";
             rs = statement.executeQuery(sqlQuery);
             while (rs.next()) {
-                System.out.println(rs.getInt("ITEMID"));
-                String sqlQueryGetItem = "SELECT ITEM, ITEMTYPE FROM STORE WHERE ITEMID="+rs.getInt("ITEMID");
-                ResultSet getItemrs = statement.executeQuery(sqlQueryGetItem);
-                
-                if (getItemrs.next()) {
+                if (rs.getString("ANIMALID").equals(key)) {
+                    System.out.println(rs.getInt("ITEMID"));
                     //add items to animal's inventory
                     //add to bed
-                    if (getItemrs.getString("ITEMTYPE").equals("beds")) {
-                        animal.store.inventory.addBed(getItemrs.getString("ITEM"));
+                    if (rs.getString("ITEMTYPE").equals("beds")) {
+
+                        animal.store.inventory.addBed(rs.getString("ITEM"));
                     }
                     //add to food
-                    if (getItemrs.getString("ITEMTYPE").equals("foods")) {
-                        animal.store.inventory.addFood(getItemrs.getString("ITEM"));
+                    if (rs.getString("ITEMTYPE").equals("foods")) {
+                        animal.store.inventory.addFood(rs.getString("ITEM"));
                     }
                     //add to toy
-                    if (getItemrs.getString("ITEMTYPE").equals("toys")) {
-                        animal.store.inventory.addToy(getItemrs.getString("ITEM"));
+                    if (rs.getString("ITEMTYPE").equals("toys")) {
+                        animal.store.inventory.addToy(rs.getString("ITEM"));
                     }
-                }
 
+                }
             }
         } catch (SQLException e) {
             System.out.println(e);
             System.out.println("No items to add to inventory");
-        }
+        } 
     }
 
     //retrieve store items

@@ -37,13 +37,11 @@ public class Inventory {
     
     public void addBed(String bed) {
         this.bed.add(bed);
-        
         this.allItems.add(bed);
     }
     
     public void addToy(String toy) {
         this.toy.add(toy);
-        
         this.allItems.add(toy);
     }
     
