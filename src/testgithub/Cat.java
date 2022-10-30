@@ -35,10 +35,12 @@ public class Cat extends Animal {
         // If statements for when values are over or equal to their cap
         if (this.getHunger() >= this.getHungerCap()) {
             this.setHunger(this.getHungerCap());
+            this.setFeed(false);
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too full to eat.");
         } 
         if (this.getHappiness() >= this.getHappinessCap()) {
             this.setHappiness(this.getHappinessCap());
+            this.setFeed(false);
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }
 
@@ -62,16 +64,22 @@ public class Cat extends Animal {
                 this.setPlay(true);
             // If values are going below 0 or above the cap after the method runs
             } else if (this.getHunger() - 2 <= 0) {
+                this.setPlay(false);
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too hungry to play.");
             } else if (this.getSleep() - 2 <= 0) {
+                this.setPlay(false);
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too sleepy to play.");
             }
         // If statement for when values are over or equal to their cap    
         } if (this.getHunger() == 1) {
+            this.setPlay(false);
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too hungry to play.");
         } if (this.getSleep() == 1) {
+            this.setPlay(false);
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too sleepy to play.");
         } if (this.getHappiness() >= this.getHappinessCap()) {
+            this.setHappiness(this.getHappinessCap());
+            this.setPlay(false);
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }
 
@@ -91,14 +99,20 @@ public class Cat extends Animal {
                 this.setSleep(true);
              // If values are going below 0 or above the cap after the method runs
             } else if (this.getSleep() + 2 > this.getSleepCap()) {
+                this.setSleep(false);
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to have too much energy when he wakes up and cannot sleep now.");
             } else if (this.getHealth() + 2 > this.getHealthCap()) {
+                this.setSleep(false);
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too healthy and cannot sleep now.");
             }
         // Else statement for when values are over or equal to their cap 
-        } if (this.getSleep() >= this.getSleepCap()) {
+        } if (this.getSleep() > this.getSleepCap()) {
+            this.setSleep(this.getSleepCap());
+            this.setSleep(false);
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " isn't tired enough to go to sleep.");
-        } if (this.getHealth() >= this.getHealthCap()) {
+        } if (this.getHealth() > this.getHealthCap()) {
+            this.setHealth(this.getHealthCap());
+            this.setSleep(false);
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too healthy.");
         }
     }

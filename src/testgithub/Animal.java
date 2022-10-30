@@ -68,6 +68,9 @@ public abstract class Animal{
         
         // Connect to Database
         animalDB = new AnimalDB(animalName, getAnimalType(), this);
+        animalDB.createAnimalDB();
+        animalDB.createStoreDB();
+        animalDB.createAnimalInvenDB();
         
          //get store items if there are saved user items
         animalDB.retrieveStoreDB();
