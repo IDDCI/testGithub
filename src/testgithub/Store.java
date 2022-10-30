@@ -1,3 +1,4 @@
+
 package testgithub;
 
 import java.util.ArrayList;
@@ -10,24 +11,18 @@ import java.util.Scanner;
 public class Store {
     //instance variables
     HashMap food, bed, toy;
-    private ArrayList allItems;
-    private int level, purchaseInput;
     
-    private Scanner scanner;
     Inventory inventory;
     Money money;
     
     public Store(int level) {
         this.inventory = new Inventory();
         this.money = new Money();
-        this.scanner = new Scanner(System.in);
-        this.level = level;
         
         this.food = new HashMap();
         this.bed = new HashMap();
         this.toy = new HashMap();
         
-        //get saved store items
     }
     
     public void setFoods(HashMap food) {
@@ -40,11 +35,6 @@ public class Store {
     
     public void setToys(HashMap toy) {
         this.toy = bed;
-    }
-    
-    //used to update level when user levels up
-    public void updateLevel(int level) {
-        this.level = level;
     }
     
     public boolean buyItem(String item) {
@@ -110,8 +100,6 @@ public class Store {
         
         return items;
     }
-    
-    
     
     //get individual items
     public String[] getFoods() {

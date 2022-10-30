@@ -23,7 +23,7 @@ public class Dog extends Animal {
     public void feed() {
         // Makes sure that the stats are less than the cap
         if (this.getHunger() < this.getHungerCap() && this.getHappiness() < this.getHappinessCap()) {
-            if (!(this.getHunger() + 2 >= this.getHungerCap())) {
+            if (!(this.getHunger() + 2 > this.getHungerCap())) {
                 this.setFeed(true);
                 // Add onto stats
                 this.setHappiness(this.getHappiness() + 2);
@@ -31,7 +31,7 @@ public class Dog extends Animal {
                 // Adds xp to animal
                 lvl.updateXp();
             // If values are going below 0 or above the cap after the method runs
-            } else if (this.getHunger() + 2 >= this.getHungerCap()) {
+            } else if (this.getHunger() + 2 > this.getHungerCap()) {
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too full to eat.");
             }
         // If statements for when values are over or equal to their cap
@@ -49,7 +49,7 @@ public class Dog extends Animal {
     public void play() {
         // Makes sure that the stats are less than the cap
         if (this.getHappiness() < this.getHappinessCap() && this.getHunger() != 1 && this.getSleep() != 1) {
-            if (!(this.getHappiness() + 2 >= this.getHappinessCap()) && !(this.getHunger() - 2 <= 0) && !(this.getSleep() - 2 <= 0)) {
+            if (!(this.getHappiness() + 2 > this.getHappinessCap()) && !(this.getHunger() - 2 <= 0) && !(this.getSleep() - 2 <= 0)) {
                 this.setPlay(true);
                 // Add onto stats
                 this.setHappiness(this.getHappiness() + 2); 
@@ -60,7 +60,7 @@ public class Dog extends Animal {
                 // Adds xp to animal
                 lvl.updateXp();
             // If values are going below 0 or above the cap after the method runs
-            } else if (this.getHappiness() + 2 >= this.getHappinessCap()) {
+            } else if (this.getHappiness() + 2 > this.getHappinessCap()) {
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " will go over max happiness and that's not allowed.");
             } else if (this.getHunger() - 2 <= 0) {
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too hungry to play.");
@@ -72,7 +72,7 @@ public class Dog extends Animal {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too hungry to play.");
         } if (this.getSleep() == 1) {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too sleepy to play.");
-        } if (this.getHappiness() > this.getHappinessCap()) {
+        } if (this.getHappiness() >= this.getHappinessCap()) {
             this.setHappiness(this.getHappinessCap());
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " has reached max happiness.");
         }

@@ -104,11 +104,11 @@ public abstract class Animal{
     public void animalStats() {
         switch (lvl.getLevel()) {
             case 1:
-                this.happiness = 10;
+                this.happiness = 5;
                 this.happinessCap = 10;
                 this.health = 30;
                 this.healthCap = 30;
-                this.hunger = 20;
+                this.hunger = 10;
                 this.hungerCap = 20;
                 this.sleeping = 20;
                 this.sleepingCap = 20;

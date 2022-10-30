@@ -63,4 +63,13 @@ public class Inventory {
     public ArrayList getAllItems() {
         return this.allItems;
     }
+    
+    public static void main(String[] args) {
+        Inventory test = new Inventory();
+        
+        test.addToy("bean");
+        for (int i = 0; i < test.toy.size(); i++){
+            System.out.println(test.toy.get(i));
+        }
+    }
 }

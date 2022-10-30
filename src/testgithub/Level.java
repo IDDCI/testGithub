@@ -80,9 +80,8 @@ public class Level {
         // if xp is equals to lvl cap and lower than 0
         else if (this.getLevel() < 5){
             this.level++;
-            //update store's user level and add appropriate items depending on new level
-            animal.store.updateLevel(this.level);
-            //animal.store.addFileItems();
+            
+            //update level stats
             levelStats();
             animal.animalStats();
         } 

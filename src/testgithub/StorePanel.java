@@ -26,11 +26,9 @@ public class StorePanel extends JPanel implements ActionListener {
     JButton buyButton, backButton, filterButton;
     JLabel storeTitle, displayCoins, filterLabel;
     JComboBox filterBox;
-    JScrollPane itemPane;
-    String[] itemListArray;
-    String[] foodList, bedList, toyList, allItemsList;
-    JList displayedList;
-    HashMap allItemsHashMap;
+    JScrollPane itemPane, inventoryPane;
+    String[] foodList, bedList, toyList, allItemsList, inventoryListString;
+    JList displayedList, inventoryList;
     Animal animal;
     
     
@@ -77,18 +75,25 @@ public class StorePanel extends JPanel implements ActionListener {
         this.add(displayCoins);
         
         //adding items to item pane
-            //getting all items as hashmap
-        this.allItemsHashMap = new HashMap();
-        this.allItemsHashMap = animal.store.getAllItemsHashMap();
             //getting category list as strings
         this.allItemsList = animal.store.getAllItemsString();
         this.foodList = animal.store.getFoods();
         this.bedList = animal.store.getBeds();
         this.toyList = animal.store.getToys();
         
-            //adding to jlist
+            //adding to item list
         this.displayedList = new JList(this.animal.store.getAllItemsString());
             //adding jlist to scrollpane
+        this.itemPane = new JScrollPane(this.displayedList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.itemPane.setLocation(480, 100);
+        this.itemPane.setSize(420,420);
+        this.itemPane.setVisible(true);
+        this.add(itemPane);
+        
+        //adding to inventory list
+        this.displayedList = new JList(this.animal.store.inventory.getAllItemsString());
+            //adding inventory list to scrollpane
         this.itemPane = new JScrollPane(this.displayedList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.itemPane.setLocation(480, 100);

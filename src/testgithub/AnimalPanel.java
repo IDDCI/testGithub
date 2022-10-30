@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -173,14 +174,20 @@ public class AnimalPanel extends JPanel {
                 new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 animal.play();
-
+                
+                
                 if (animal.isPlay()) {
+                    
+                    System.out.println(animal.store.inventory.toy.isEmpty());
                     if (!animal.store.inventory.toy.isEmpty()) {
                         Random random = new Random();
                         int randomIndex = random.nextInt(animal.store.inventory.toy.size());
 
                         String toyItem = (String) animal.store.inventory.toy.get(randomIndex);
-                        toy = new ImageIcon("./src/virtualpet/Images/Food/" + toyItem + ".png").getImage();
+                        System.out.println(randomIndex);
+                        System.out.println(toyItem);
+                        toy = new ImageIcon("./src/virtualpet/Images/Food/" + toyItem.trim() + ".png").getImage();
+                        
                     }
                     playing = "playing";
                     playCounter = 0;
@@ -200,6 +207,7 @@ public class AnimalPanel extends JPanel {
                 animal.feed();
 
                 if (animal.isFeed()) {
+                    
                     if (!animal.store.inventory.food.isEmpty()) {
                         Random random = new Random();
                         int randomIndex = random.nextInt(animal.store.inventory.food.size());
@@ -357,6 +365,7 @@ public class AnimalPanel extends JPanel {
 
             if (sleepCounter == 1500 && "sleeping".equals(this.sleeping)) {
                 sleeping = null;
+                sleepCounter = 0;
                 play.setEnabled(true);
                 feed.setEnabled(true);
                 sleep.setEnabled(true);
@@ -377,6 +386,7 @@ public class AnimalPanel extends JPanel {
 
             if (playCounter == 1500 && "playing".equals(this.playing)) {
                 playing = null;
+                playCounter = 0;
                 play.setEnabled(true);
                 feed.setEnabled(true);
                 sleep.setEnabled(true);
@@ -386,17 +396,18 @@ public class AnimalPanel extends JPanel {
             // if animal is eating
             if ("feeding".equals(this.feeding) && feedCounter < 1500) {
                 if (food != null) {
-                    g.drawImage(food, 400, 150, this);
+                    g.drawImage(food, 520, 300, this);
                 }
                 play.setEnabled(false);
                 feed.setEnabled(false);
                 sleep.setEnabled(false);
                 store.setEnabled(false);
-                playCounter++;
+                feedCounter++;
             }
 
             if (feedCounter == 1500 && "feeding".equals(this.feeding)) {
                 feeding = null;
+                feedCounter = 0;
                 play.setEnabled(true);
                 feed.setEnabled(true);
                 sleep.setEnabled(true);

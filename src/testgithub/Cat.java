@@ -80,21 +80,21 @@ public class Cat extends Animal {
     public void sleeping() {
         // Makes sure that the stats are less than the cap
         if (this.getSleep() < this.getSleepCap() && this.getHealth() < this.getHealthCap()) {
-            if (!(this.getSleep() + 2 >= this.getSleepCap()) && !(this.getHealth() + 2 >= this.getHealthCap())) {
+            if (!(this.getSleep() + 2 > this.getSleepCap()) && !(this.getHealth() + 2 > this.getHealthCap())) {
                 // Add onto stats
                 this.setSleep(true);
                 this.setSleep(this.getSleep() + 2);
                 this.setHealth(this.getHealth() + 2);
              // If values are going below 0 or above the cap after the method runs
-            } else if (this.getSleep() + 2 >= this.getSleepCap()) {
+            } else if (this.getSleep() + 2 > this.getSleepCap()) {
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to have too much energy when he wakes up and cannot sleep now.");
-            } else if (this.getHealth() + 2 >= this.getHealthCap()) {
+            } else if (this.getHealth() + 2 > this.getHealthCap()) {
                 JOptionPane.showMessageDialog(null, this.getAnimalName() + " is going to be too healthy and cannot sleep now.");
             }
         // Else statement for when values are over or equal to their cap 
         } if (this.getSleep() >= this.getSleepCap()) {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " isn't tired enough to go to sleep.");
-        } if (this.getHealth() <= this.getHealthCap()) {
+        } if (this.getHealth() >= this.getHealthCap()) {
             JOptionPane.showMessageDialog(null, this.getAnimalName() + " is too healthy.");
         }
     }

@@ -66,6 +66,7 @@ public class AnimalDB {
             }
 
         } catch (SQLException e) {
+            System.out.println(e);
             System.out.println("Error: Unable to insert in Inventory table");
         }
     }
