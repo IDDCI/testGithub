@@ -16,13 +16,15 @@ import javax.swing.JOptionPane;
  * @author DDC
  */
 public class AnimalDB {
-
+    //instance variables
     private final DBManager dbManager;
     private final Connection conn;
     private Statement statement;
     private Animal animal;
     private final String key;
 
+    
+    //constructor
     public AnimalDB(String name, String type, Animal animal) {
         dbManager = new DBManager();
         conn = dbManager.getConnection();
@@ -53,18 +55,22 @@ public class AnimalDB {
     // If a new item is wanted to be added into the database
     public void insertAnimalInvenDB(String item) {
         try {
+            //execute sql statement
             this.statement = this.conn.createStatement();
             ResultSet rs = null;
+            
+            //select statement if statement matches the given item
             String sqlQuery = "SELECT ITEMID, ITEMTYPE, ITEM FROM STORE WHERE ITEM='" + item + "'";
             rs = statement.executeQuery(sqlQuery);
+            //if next exists from sql query
             if (rs.next())
             {
-                System.out.println(rs.getString("ITEM") + " " + rs.getInt("ITEMID"));
+                //insert item values into database 
                 this.statement.addBatch("INSERT INTO ANIMAL_INVENTORY VALUES (" + rs.getInt("ITEMID") + ", '" + this.key + "')");
                 this.statement.executeBatch();
             }
             
-
+            //catch exception
         } catch (SQLException e) {
             System.out.println(e);
             System.out.println("Error: Unable to insert in Inventory table");
@@ -149,6 +155,7 @@ public class AnimalDB {
             String sqlQuery = "SELECT ANIMAL_INVENTORY.ANIMALID, ANIMAL_INVENTORY.ITEMID, STORE.ITEM, STORE.ITEMTYPE FROM ANIMAL_INVENTORY, STORE WHERE ANIMAL_INVENTORY.ITEMID = STORE.ITEMID";
             rs = statement.executeQuery(sqlQuery);
             while (rs.next()) {
+                //if animalid matches the stored key, proceed to adding inventory items
                 if (rs.getString("ANIMALID").equals(key)) {
                     System.out.println(rs.getInt("ITEMID"));
                     //add items to animal's inventory
@@ -206,10 +213,12 @@ public class AnimalDB {
 
     }
 
+    //disconnect database
     public void disconnect() {
         this.dbManager.closeConnections();
     }
 
+    //creating animal database
     public void createAnimalDB() {
         try {
             this.statement = this.conn.createStatement();
@@ -218,8 +227,7 @@ public class AnimalDB {
                     + "HUNGERCAP INT NOT NULL, SLEEPCAP INT NOT NULL, MONEY FLOAT)");
             this.statement.executeBatch();
         } catch (SQLException e) {
-            System.out.println(e);
-            System.out.println("Error: Unable to create table Animal");
+            //System.out.println("Error: Unable to create table Animal");
         }
     }
 
@@ -233,8 +241,7 @@ public class AnimalDB {
             this.statement.executeBatch();
 
         } catch (SQLException e) {
-            System.out.println(e);
-            System.out.println("Error: Unable to create table Store");
+            //System.out.println("Error: Unable to create table Store");
         }
     }
 
@@ -246,7 +253,7 @@ public class AnimalDB {
             this.statement.addBatch("ALTER TABLE ANIMAL_INVENTORY ADD CONSTRAINT name_type_fk FOREIGN KEY (ANIMALID) REFERENCES ANIMAL(ANIMALID)");
             this.statement.executeBatch();
         } catch (SQLException e) {
-            System.out.println("Error: Unable to create table Animal Inventory");
+            //System.out.println("Error: Unable to create table Animal Inventory");
         }
     }
 }

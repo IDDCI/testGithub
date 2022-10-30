@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,13 +22,13 @@ import javax.swing.ScrollPaneConstants;
  */
 public class StorePanel extends JPanel implements ActionListener {
     //instance variables
-    JButton buyButton, backButton, filterButton;
-    JLabel storeTitle, displayCoins, filterLabel, inventoryTitle;
-    JComboBox filterBox;
-    JScrollPane itemPane, inventoryPane;
-    String[] foodList, bedList, toyList, allItemsList, inventoryListString;
-    JList displayedList, inventoryList;
-    Animal animal;
+    protected JButton buyButton, backButton, filterButton;
+    private JLabel storeTitle, displayCoins, filterLabel, inventoryTitle;
+    private JComboBox filterBox;
+    private JScrollPane itemPane, inventoryPane;
+    private String[] foodList, bedList, toyList, allItemsList, inventoryListString;
+    private JList displayedList, inventoryList;
+    private Animal animal;
     
     
     //constructor
@@ -46,10 +45,12 @@ public class StorePanel extends JPanel implements ActionListener {
         this.add(backButton); 
     }
     
+    //set animal to access classes in animal
     public void setAnimal(Animal animal) {
         this.animal = animal;
     }
     
+    //set components of panel
     public void setComponents() {
         //adding components to frame
         //add Store title
@@ -135,21 +136,30 @@ public class StorePanel extends JPanel implements ActionListener {
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e){
                         String filterOption;
+                        //get selected filter option
                         filterOption = filterBox.getSelectedItem().toString();
                         
+                        //set pane to display all items
                         if (filterOption.equals("All")) {
                             displayedList.setListData(allItemsList);
                         }
+                        
+                        //set pane to display only foods
                         if (filterOption.equals("Foods")) {
                             displayedList.setListData(foodList);
                         }
+                        
+                        //set pane to display only toys
                         if (filterOption.equals("Toys")) {
                             displayedList.setListData(toyList);
                         }
+                        
+                        //set pane to display only beds
                         if (filterOption.equals("Beds")) {
                             displayedList.setListData(bedList);
                         }
-                            
+                           
+                        //update store view
                         update();
                     }
                    
@@ -182,7 +192,6 @@ public class StorePanel extends JPanel implements ActionListener {
                     catch(NullPointerException exception) {
                         JOptionPane.showMessageDialog(null, "You haven't selected an item!");
                     }
-                    inventoryList.setListData(animal.store.inventory.getAllItemsString());
                     //update coins on screen
                     update();
                 }
@@ -190,6 +199,7 @@ public class StorePanel extends JPanel implements ActionListener {
         );
     }
     
+    //return the back button
     public JButton getBackButton() {
         return this.backButton;
     }
@@ -198,8 +208,9 @@ public class StorePanel extends JPanel implements ActionListener {
     
     //update user view
     public void update() {
+        //update coins and inventorylist view
         this.displayCoins.setText("Coins: $"+this.animal.store.money.getAmount()); 
-        
+        inventoryList.setListData(animal.store.inventory.getAllItemsString());
         
     }
     @Override

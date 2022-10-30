@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Oct 31 00:23:59 NZDT 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-28a2-5a22-0000070f9378 
-on database directory /Users/DDC/NetBeansProjects/testGithub/AnimalDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@355da254 
-Loaded from file:/Users/DDC/NetBeansProjects/testGithub/lib%20/derby.jar
+Mon Oct 31 01:37:33 NZDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0184-28e5-b528-000006d27008 
+on database directory /Users/jennylim/testinghub1/testGithub/AnimalDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42a57993 
+Loaded from file:/Users/jennylim/testinghub1/testGithub/lib%20/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=12.0.2+10
-user.dir=/Users/DDC/NetBeansProjects/testGithub
+java.runtime.version=17.0.2+8-LTS-86
+user.dir=/Users/jennylim/testinghub1/testGithub
 os.name=Mac OS X
 os.arch=x86_64
-os.version=10.16
+os.version=10.15.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

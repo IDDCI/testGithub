@@ -1,9 +1,7 @@
 
 package testgithub;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 /**
  *
  * @author jennylim
@@ -15,6 +13,7 @@ public class Store {
     Inventory inventory;
     Money money;
     
+    //constructor
     public Store(int level) {
         this.inventory = new Inventory();
         this.money = new Money();
@@ -25,6 +24,7 @@ public class Store {
         
     }
     
+    //set methods to set items from database
     public void setFoods(HashMap food) {
         this.food = food;
     }
@@ -37,13 +37,16 @@ public class Store {
         this.toy = bed;
     }
     
+    //method to buy items
     public boolean buyItem(String item) {
         //check if item is in food list
         for (Object foodItem: this.food.keySet()) {
+            //if found:
             if (foodItem.equals(item)) {
-                
+                //check if user has enough money
                 if ((Double)this.food.get(foodItem) <= this.money.getAmount())
                 {
+                    //withdraw amount and add item to inventory
                     this.money.withdrawAmount((Double)this.food.get(foodItem));
                     this.inventory.addFood(item);
                     return true;
@@ -85,14 +88,17 @@ public class Store {
         String[] items = new String[20];
         int i=0;
         
+        //add bed to array from arraylist
         for (Object bedItem: this.bed.keySet()) {
             items[i] = (String)bedItem + "\t$" + this.bed.get(bedItem);
-            i++;
+            i++; //increment to get next indexes
         }
+        //add food to array from arraylist
         for (Object foodItem: this.food.keySet()) {
             items[i] = (String)foodItem + "\t$" + this.food.get(foodItem);
             i++;
         }
+        //add toy to array from arraylist
         for (Object toyItem: this.toy.keySet()) {
             items[i] = (String)toyItem + "\t$" + this.toy.get(toyItem);
             i++;
@@ -142,17 +148,6 @@ public class Store {
         }
         
         return beds;
-    }
-    
-    //return items combined as hashmap
-    public HashMap getAllItemsHashMap() {
-        //combine all items into new hashmap
-        HashMap combined = new HashMap();
-        combined.putAll(bed);
-        combined.putAll(food);
-        combined.putAll(bed);
-        //return hashmap
-        return combined;
     }
     
     

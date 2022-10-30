@@ -338,7 +338,7 @@ public class AnimalPanel extends JPanel {
                         + "- If your pet is too happy or is too sleepy, they cannot play\n"
                         + "- If your pet has full sleep or health, they cannot sleep\n"
                         + "- Pet stats decrease with time so make sure to keep your pet at full health!\n"
-                        + "- Access the store to buy new items for your pet! Leveling up will provide more store items\n"
+                        + "- Access the store to buy new items for your pet!\n"
                         + "- Items bought from the store will be randomly displayed during feeding or playing\n"
                         + "- Money is obtained by playing with the pet, you will earn $5 each time your pet plays\n"
                         + "- Look after your VirtualPet and it will flourish, have fun!\n\n"
@@ -353,7 +353,7 @@ public class AnimalPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
-        g.fillRect(250, 90, 500, 400);
+        g.fillRect(120, 90, 750, 400);
     }
 
     // Draw animal stats animal
@@ -362,19 +362,19 @@ public class AnimalPanel extends JPanel {
         super.paint(g);
         if (Type != null && !"".equals(Name) && !nameCheck) {
             // Draws default Animal (either Dog or Cat)
-            g.drawImage(happyDC, 300, 150, this);
+            g.drawImage(happyDC, 150, 150, this);
             // if happiness, health or hunger is low this show want face
             if ((animal.getHappiness() <= 5 && animal.getHappiness() > 0)
                     || animal.getHealth() <= 5 && animal.getHealth() > 0
                     || animal.getHunger() <= 5 && animal.getHunger() > 0) {
-                g.drawImage(wantDC, 300, 150, this);
+                g.drawImage(wantDC, 150, 150, this);
                 g.drawString("Your pet has low stats", 400, 440);
                 g.drawString("Select an action to bring stats up.", 400, 455);
             }
 
             // if you put animal to sleep
             if ("sleeping".equals(this.sleeping) && sleepCounter < 1500) {
-                g.drawImage(sleepyDC, 300, 150, this);
+                g.drawImage(sleepyDC, 150, 150, this);
                 play.setEnabled(false);
                 feed.setEnabled(false);
                 sleep.setEnabled(false);
@@ -394,7 +394,7 @@ public class AnimalPanel extends JPanel {
             // if you play with animal
             if ("playing".equals(this.playing) && playCounter < 1500) {
                 if (toy != null) {
-                    g.drawImage(toy, 400, 150, this);
+                    g.drawImage(toy, 400, 300, this);
                 }
                 play.setEnabled(false);
                 feed.setEnabled(false);
@@ -415,7 +415,7 @@ public class AnimalPanel extends JPanel {
             // if animal is eating
             if ("feeding".equals(this.feeding) && feedCounter < 1500) {
                 if (food != null) {
-                    g.drawImage(food, 520, 300, this);
+                    g.drawImage(food, 520, 280, this);
                 }
                 play.setEnabled(false);
                 feed.setEnabled(false);

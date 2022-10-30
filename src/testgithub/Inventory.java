@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package testgithub;
 
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ public class Inventory {
     ArrayList bed;
     ArrayList toy;
     
+        //arraylist to store all items
     ArrayList allItems;
     
     //constructor
@@ -58,10 +56,12 @@ public class Inventory {
         return this.toy;
     }
     
+    //return all items as an arraylist
     public ArrayList getAllItems() {
         return this.allItems;
     }
     
+    //return all items as a string
     public String[] getAllItemsString() {
         String[] items = new String[20];
         
